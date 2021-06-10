@@ -92,7 +92,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnAdd_KH = new javax.swing.JLabel();
         btnUpdate_KH = new javax.swing.JLabel();
         btnDelete_KH = new javax.swing.JLabel();
-        DOBirth_KH_TextField = new javax.swing.JTextField();
+        DOBirth_Chooser_KH = new com.toedter.calendar.JDateChooser();
         CCCD_KH_TextField = new javax.swing.JTextField();
         Phone_KH_TextField = new javax.swing.JTextField();
         Name_KH_TextField = new javax.swing.JTextField();
@@ -111,8 +111,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnAdd_NV = new javax.swing.JLabel();
         btnUpdate_NV = new javax.swing.JLabel();
         btnDelete_NV = new javax.swing.JLabel();
+        DOBirth_Chooser_NV = new com.toedter.calendar.JDateChooser();
         DePart_NV_TextField = new javax.swing.JComboBox<>();
-        DOBirth_NV_TextField = new javax.swing.JTextField();
         Phone_NV_TextField = new javax.swing.JTextField();
         Adr_NV_TextField = new javax.swing.JTextField();
         Gender_NV_TextField = new javax.swing.JTextField();
@@ -596,18 +596,10 @@ public class MainFrame extends javax.swing.JFrame {
         });
         KH_Panel.add(btnDelete_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 120, 50));
 
-        DOBirth_KH_TextField.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
-        DOBirth_KH_TextField.setText("Date Of Birth");
-        DOBirth_KH_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        DOBirth_KH_TextField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                DOBirth_KH_TextFieldFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                DOBirth_KH_TextFieldFocusLost(evt);
-            }
-        });
-        KH_Panel.add(DOBirth_KH_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 380, 40));
+        DOBirth_Chooser_KH.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        DOBirth_Chooser_KH.setDateFormatString("dd-MM-yyyy");
+        DOBirth_Chooser_KH.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
+        KH_Panel.add(DOBirth_Chooser_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 380, 40));
 
         CCCD_KH_TextField.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         CCCD_KH_TextField.setText("CCCD");
@@ -787,23 +779,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         NV_Panel.add(btnDelete_NV, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 120, 50));
 
+        DOBirth_Chooser_NV.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        DOBirth_Chooser_NV.setDateFormatString("dd-MM-yyyy");
+        DOBirth_Chooser_NV.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
+        NV_Panel.add(DOBirth_Chooser_NV, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 390, 40));
+
         DePart_NV_TextField.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         DePart_NV_TextField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cleaner", "Security Guard", "Room Attendent", "Receptionist", "Manager" }));
         DePart_NV_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         NV_Panel.add(DePart_NV_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 390, 40));
-
-        DOBirth_NV_TextField.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
-        DOBirth_NV_TextField.setText("Date Of Birth");
-        DOBirth_NV_TextField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        DOBirth_NV_TextField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                DOBirth_NV_TextFieldFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                DOBirth_NV_TextFieldFocusLost(evt);
-            }
-        });
-        NV_Panel.add(DOBirth_NV_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 390, 40));
 
         Phone_NV_TextField.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         Phone_NV_TextField.setText("Phone Number");
@@ -1326,18 +1310,6 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Phone_KH_TextFieldFocusLost
 
-    private void DOBirth_KH_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DOBirth_KH_TextFieldFocusGained
-        if(DOBirth_KH_TextField.getText().equals("Date Of Birth")){
-            DOBirth_KH_TextField.setText("");
-        }
-    }//GEN-LAST:event_DOBirth_KH_TextFieldFocusGained
-
-    private void DOBirth_KH_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DOBirth_KH_TextFieldFocusLost
-       if(DOBirth_KH_TextField.getText().isEmpty()) {
-            DOBirth_KH_TextField.setText("Date Of Birth");
-        }
-    }//GEN-LAST:event_DOBirth_KH_TextFieldFocusLost
-
     private void CusID_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CusID_TextFieldFocusGained
         if(CusID_TextField.getText().equals("Customer ID")){
             CusID_TextField.setText("");
@@ -1409,18 +1381,6 @@ public class MainFrame extends javax.swing.JFrame {
             Phone_NV_TextField.setText("Phone Number");
         }
     }//GEN-LAST:event_Phone_NV_TextFieldFocusLost
-
-    private void DOBirth_NV_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DOBirth_NV_TextFieldFocusGained
-        if(DOBirth_NV_TextField.getText().equals("Date Of Birth")){
-            DOBirth_NV_TextField.setText("");
-        }
-    }//GEN-LAST:event_DOBirth_NV_TextFieldFocusGained
-
-    private void DOBirth_NV_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DOBirth_NV_TextFieldFocusLost
-        if(DOBirth_NV_TextField.getText().isEmpty()) {
-            DOBirth_NV_TextField.setText("Date Of Birth");
-        }
-    }//GEN-LAST:event_DOBirth_NV_TextFieldFocusLost
 
     /**
      * @param args the command line arguments
@@ -1498,8 +1458,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField CCCD_KH_TextField;
     private javax.swing.JTextField CusID_TextField;
     private javax.swing.JTextField CustomerID_TextField;
-    private javax.swing.JTextField DOBirth_KH_TextField;
-    private javax.swing.JTextField DOBirth_NV_TextField;
+    private com.toedter.calendar.JDateChooser DOBirth_Chooser_KH;
+    private com.toedter.calendar.JDateChooser DOBirth_Chooser_NV;
     private javax.swing.JComboBox<String> DePart_NV_TextField;
     private javax.swing.JTextField Gender_NV_TextField;
     private javax.swing.JLabel ID_Backgr;
