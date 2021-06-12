@@ -13,6 +13,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,10 +27,11 @@ public class Customer_DAL {
     public Customer_DAL(){};
     public boolean Insert(Customer_DTO cus){
         try {
-            Object arg[]= {cus.getCustomer_id(),cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),cus.getDateOfBird()};
-
+            
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),df.format(cus.getDateOfBird())};      
             String cus_SQL;
-            cus_SQL = String.format("INSERT INTO Client VALUES ('%s','%s','%s','%s','%s','%s')",arg);
+            cus_SQL = String.format("INSERT INTO Client(fullname,CCCD,PhoneNumber,DateofBirth) VALUES ('%s','%s','%s','%s')",arg);
 
             Statement statement = GUI.Login_GUI.conection.conn.createStatement();
 
@@ -39,6 +42,7 @@ public class Customer_DAL {
                 System.out.println("Insert fail");
             }
         }catch (SQLException ex){
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -86,10 +90,11 @@ public class Customer_DAL {
             String sql = selectSql;
             ResultSet rs = GUI.Login_GUI.conection.conn.createStatement().executeQuery(sql);
             while (rs.next()){
-                Customer_DTO em = new Customer_DTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+                Customer_DTO em = new Customer_DTO(rs.getString("ClientID"),rs.getString("FullName"),rs.getString("CCCD"),rs.getString("PhoneNumber"),rs.getDate("DateofBirth"));
                 list_cus.add(em);
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
         }
         return list_cus;

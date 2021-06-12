@@ -11,6 +11,11 @@ import BUS.Employee_BUS;
 import DTO.Booking_DTO;
 import DTO.Customer_DTO;
 import DTO.Employee_DTO;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -27,6 +32,7 @@ public class Booking_Panel extends javax.swing.JFrame {
     public Booking_Panel() {
         initComponents();
         setLocationRelativeTo(null);
+        RoomID_TextField.setText(MainFrame.ID_TextField.getText());
     }
 
     /**
@@ -60,7 +66,6 @@ public class Booking_Panel extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         DOBirth_Chooser.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        DOBirth_Chooser.setDateFormatString("dd-MM-yyyy");
         DOBirth_Chooser.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         jPanel1.add(DOBirth_Chooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 400, 40));
 
@@ -157,6 +162,18 @@ public class Booking_Panel extends javax.swing.JFrame {
 
     private void btnBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBookMouseClicked
        
+       cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser.getDate()));
+       List<Customer_DTO> list_cus = new ArrayList<>();
+       list_cus=cus_bus.Select("select * from Client where CCCD = '"+CCCD_KH_TextField.getText()+"'");
+       Object[] row = new Object[1];
+       System.out.println(list_cus.size());
+       list_cus.forEach((Customer_DTO cus) -> {
+            row[0]=cus.getCustomer_id();
+            System.out.println(row[0]);
+        });      
+       
+       //String bookId, String customerId, String roomId, String checkInDate, String checkOutDate
+       booking_bus.Insert(new Booking_DTO("",row[0].toString(),RoomID_TextField.getText(),"",""));
     }//GEN-LAST:event_btnBookMouseClicked
 
     private void btnBookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBookMouseEntered

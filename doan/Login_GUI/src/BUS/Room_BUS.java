@@ -7,6 +7,7 @@ package BUS;
 
 import DAL.Room_DAL;
 import DTO.Room_DTO;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,8 @@ public class Room_BUS {
      Room_DAL room_dal= new Room_DAL();
      public boolean Update(Room_DTO room_dto){
        return room_dal.Update(room_dto);
+    };
+     public List SelectData(String sql){
+       return room_dal.SelectData(sql);
     };
 }

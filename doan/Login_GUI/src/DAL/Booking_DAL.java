@@ -22,10 +22,10 @@ import javax.swing.JOptionPane;
 public class Booking_DAL {
      public boolean Insert(Booking_DTO booking){
         try {
-            Object arg[]= {booking.getBookId(),booking.getRoomId(),booking.getCustomerId(),booking.getCheckInDate(),booking.getCheckOutDate()};
+            Object arg[]= {booking.getRoomId(),booking.getCustomerId(),booking.getCheckInDate(),booking.getCheckOutDate()};
 
             String SQL;
-            SQL = String.format("INSERT INTO Booking VALUES ('%s','%s','%s','%s','%s')",arg);
+            SQL = String.format("INSERT INTO Booking(RoomId,ClientID,CheckInDate,CheckOutDate) VALUES ('%s','%s','%s','%s')",arg);
 
             Statement statement = GUI.Login_GUI.conection.conn.createStatement();
 
@@ -36,6 +36,7 @@ public class Booking_DAL {
                 System.out.println("Insert fail");
             }
         }catch (SQLException ex){
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }

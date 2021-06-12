@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author TienVinh
@@ -14,9 +16,9 @@ public class Customer_DTO {
     String fullname;
     String cccd;
     String phoneNumber;
-    String dateOfBird;
+    Date dateOfBird;
 
-    public Customer_DTO(String customer_id, String fullname, String cccd, String phoneNumber, String dateOfBird) {
+    public Customer_DTO(String customer_id, String fullname, String cccd, String phoneNumber, Date dateOfBird) {
         this.customer_id = customer_id;
         this.fullname = fullname;
         this.cccd = cccd;
@@ -56,11 +58,11 @@ public class Customer_DTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDateOfBird() {
+    public Date getDateOfBird() {
         return dateOfBird;
     }
 
-    public void setDateOfBird(String dateOfBird) {
+    public void setDateOfBird(Date dateOfBird) {
         this.dateOfBird = dateOfBird;
     }
     
