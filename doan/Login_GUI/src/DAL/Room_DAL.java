@@ -25,7 +25,7 @@ public class Room_DAL {
             Object arg[]= {room.getEmployeeId(),room.getStatus(),room.getTypeOfRoom(),room.getRoomId()};
             String sql;
             sql = String.format("UPDATE Room SET employeeId='%s', Status='%s', TypeOfRoom='%s' WHERE RoomId  = '%s'", arg);
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
                 System.out.println("Update successfull");
@@ -43,7 +43,7 @@ public class Room_DAL {
         try {
      
             String sql = selectSql;
-            ResultSet rs = GUI.Login_GUI.conection.conn.createStatement().executeQuery(sql);
+            ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
             while (rs.next()){
                 Room_DTO room = new Room_DTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
                 list_room.add(room);

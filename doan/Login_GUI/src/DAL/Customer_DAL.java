@@ -33,7 +33,7 @@ public class Customer_DAL {
             String cus_SQL;
             cus_SQL = String.format("INSERT INTO Client(fullname,CCCD,PhoneNumber,DateofBirth) VALUES ('%s','%s','%s','%s')",arg);
 
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
 
             int rows_employee = statement.executeUpdate(cus_SQL);
             if (rows_employee > 0){
@@ -54,7 +54,7 @@ public class Customer_DAL {
             Object arg[]= {cus.getCustomer_id()};
             String sql;
             sql = String.format("DELETE FROM Client WHERE ID  = '%s'", arg);
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0 ){
                 System.out.println("Delete successfull");
@@ -70,7 +70,7 @@ public class Customer_DAL {
             Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),cus.getDateOfBird(),cus.getCustomer_id()};
             String sql;
             sql = String.format("UPDATE Client SET FullName='%s', cccd='%s', phoneNumber='%s', DateOfBird='%s' WHERE CID  = '%s'", arg);
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
                 System.out.println("Update successfull");
@@ -88,7 +88,7 @@ public class Customer_DAL {
         try {
      
             String sql = selectSql;
-            ResultSet rs = GUI.Login_GUI.conection.conn.createStatement().executeQuery(sql);
+            ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
             while (rs.next()){
                 Customer_DTO em = new Customer_DTO(rs.getString("ClientID"),rs.getString("FullName"),rs.getString("CCCD"),rs.getString("PhoneNumber"),rs.getDate("DateofBirth"));
                 list_cus.add(em);

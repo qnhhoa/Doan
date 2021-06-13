@@ -27,7 +27,7 @@ public class Booking_DAL {
             String SQL;
             SQL = String.format("INSERT INTO Booking(RoomId,ClientID,CheckInDate,CheckOutDate) VALUES ('%s','%s','%s','%s')",arg);
 
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
 
             int rows = statement.executeUpdate(SQL);
             if (rows > 0){
@@ -48,7 +48,7 @@ public class Booking_DAL {
             Object arg[]= {booking.getBookId()};
             String sql;
             sql = String.format("DELETE FROM booking WHERE bookId  = '%s'", arg);
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0 ){
                 System.out.println("Delete successfull");
@@ -64,7 +64,7 @@ public class Booking_DAL {
             Object arg[]= {booking.getRoomId(),booking.getCustomerId(),booking.getCheckInDate(),booking.getCheckOutDate(),booking.getBookId()};
             String sql;
             sql = String.format("UPDATE Booking SET RoomId='%s', CustomerId='%s', CheckInDate='%s', CheckOutDate='%s' WHERE bookId  = '%s'", arg);
-            Statement statement = GUI.Login_GUI.conection.conn.createStatement();
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
                 System.out.println("Update successfull");
@@ -82,7 +82,7 @@ public class Booking_DAL {
         try {
      
             String sql = selectSql;
-            ResultSet rs = GUI.Login_GUI.conection.conn.createStatement().executeQuery(sql);
+            ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
             while (rs.next()){
                 Booking_DTO em = new Booking_DTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
                 list_booking.add(em);

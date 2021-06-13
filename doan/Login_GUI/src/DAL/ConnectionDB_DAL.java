@@ -25,24 +25,25 @@ public class ConnectionDB_DAL {
 //            + "integratedSecurity=true";
 //    private static String USER_NAME = "sa";
 //    private static String PASSWORD = "1234567890";
-    public Connection conn = null;
+    public static Connection conn;
 
-    public boolean OpenConnection(){
+    public static Connection OpenConnection(){
         try {
-            //Class.forName(com.microsoft.sqlserver.jdbc.SQLServerDriver);
-            String dbURL = "jdbc:sqlserver://DESKTOP-C2HS95C\\LEO297;databaseName=Hotel";
-            String user = "sa";
-            String pass = "sa";
-            conn = DriverManager.getConnection(dbURL, user, pass);
+                    //Class.forName(com.microsoft.sqlserver.jdbc.SQLServerDriver);
+                    String dbURL = "jdbc:sqlserver://DESKTOP-CNAUT3O\\SQLEXPRESS;databaseName=Hotel_1";
+                    String user = "sa";
+                    String pass = "sa";
+                    conn = DriverManager.getConnection(dbURL, user, pass);
          
             
-            System.out.println("Connect succesfull");
-            return true;
+                    System.out.println("Connect succesfull");
+                    //return true;
  
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            //return false;
         }
+        return conn;
     }
     
     public boolean CloseConnection(){

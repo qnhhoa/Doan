@@ -6,11 +6,12 @@
 
 package GUI;
 
-import DAL.ConnectionDB_DAL;
+import BUS.Login_BUS;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.sql.*;
 /**
  *
  * @author Huy
@@ -176,7 +177,11 @@ public class Login_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordFieldFocusLost
 
     private void SignInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignInButtonMouseClicked
-        if (conection.OpenConnection()){
+        Login_BUS login = new Login_BUS();
+        String ID = IDTextField.getText();
+        String Pass = PasswordField.getText();
+        try {
+        if (login.Login(IDTextField.getText(), PasswordField.getText())){
         java.awt.EventQueue.invokeLater(new Runnable() {
             
             public void run() {
@@ -185,7 +190,11 @@ public class Login_GUI extends javax.swing.JFrame {
             }
         });
         this.setVisible(false);
-       }
+       }else {
+            JOptionPane.showMessageDialog(this, "Your ID or Password was wrong");
+        }
+        }catch (Exception e){
+        }
     }//GEN-LAST:event_SignInButtonMouseClicked
 
     /**
@@ -224,7 +233,7 @@ public class Login_GUI extends javax.swing.JFrame {
             }
         });
     }
-    public static ConnectionDB_DAL conection = new ConnectionDB_DAL();
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
