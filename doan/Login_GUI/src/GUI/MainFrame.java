@@ -33,6 +33,9 @@ public class MainFrame extends javax.swing.JFrame {
         KH_Table.getTableHeader().setFont(new Font("UTM Avo", Font.BOLD, 12));
         NV_Table.getTableHeader().setFont(new Font("UTM Avo", Font.BOLD, 12));
         LSDP_Table.getTableHeader().setFont(new Font("UTM Avo", Font.BOLD, 12));
+        
+        GetDataFromDTBToRoomTable();
+        GetDataFromDTBToStaffTable();
     }
 
     /**
@@ -498,10 +501,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         Phong_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Room ID", "Type Of Room", "Status", "Booking ID", "Customer ID"
@@ -675,10 +675,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         KH_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Customer ID", "Full Name", "CCCD", "Phone Number", "Date Of Birth"
@@ -883,10 +880,7 @@ public class MainFrame extends javax.swing.JFrame {
         NV_Table.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         NV_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Staff ID", "Full Name", "Gender", "Address", "Phone Number", "Date Of Birth", "Department"
@@ -934,10 +928,7 @@ public class MainFrame extends javax.swing.JFrame {
         LSDP_Table.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         LSDP_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Room ID", "Customer ID", "Staff ID", "Check In Date", "Check Out Date"
@@ -1022,7 +1013,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnQLNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNVMouseClicked
         TabPanel.setSelectedComponent(NV_Panel);
-        GetDataFromDTBToStaffTable();
     }//GEN-LAST:event_btnQLNVMouseClicked
 
     private void btnLSDPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLSDPMouseClicked
@@ -1418,41 +1408,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-//    Employee_BUS em_BUS = new Employee_BUS();
-//    public void setUpTypeOfTable(){
-//        DefaultTableModel model= (DefaultTableModel)NV_Table.getModel();
-//        model.addColumn("ID");
-//        model.addColumn("Full Name");
-//        model.addColumn("Gender");
-//        model.addColumn("DateOfBird");
-//        model.addColumn("Phone Number");
-//        model.addColumn("Address");
-//        model.addColumn("Department");
-//        
-//        
-//
-//    }
-//    public void GetDataFromDTBToStaffTable(){
-//        List<Employee_DTO> list_em = new ArrayList<>();
-//        DefaultTableModel model= (DefaultTableModel)NV_Table.getModel();
-//        list_em = em_BUS.SelectData("select * from Staff");
-//        Object[] row= new Object[7];
-//        list_em.forEach((Employee_DTO em) -> {
-//            row= new Object[7];
-//            row[0]=em.getStaffId();
-//            row[1]=em.getFullName();
-//            row[2]=em.getGender();
-//            row[3]=em.getDateOfBird();
-//            row[4]=em.getPhoneNumber();
-//            row[5]=em.getAddress();
-//            row[6]=em.getDepartment();
-//            model.addRow(row);  
-//
-//
-//        });
-//        ;
-//    }
-//    
+
     
      public void GetDataFromDTBToRoomTable(){
         List<Room_DTO> list_room = new ArrayList<>();
