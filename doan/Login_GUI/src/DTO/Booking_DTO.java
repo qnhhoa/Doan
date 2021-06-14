@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author TienVinh
@@ -13,10 +15,10 @@ public class Booking_DTO {
     String bookId;
     String customerId;
     String roomId;
-    String checkInDate;
-    String checkOutDate;
+    Date checkInDate;
+    Date checkOutDate;
 
-    public Booking_DTO(String bookId, String customerId, String roomId, String checkInDate, String checkOutDate) {
+    public Booking_DTO(String bookId, String customerId, String roomId, Date checkInDate, Date checkOutDate) {
         this.bookId = bookId;
         this.customerId = customerId;
         this.roomId = roomId;
@@ -48,19 +50,19 @@ public class Booking_DTO {
         this.roomId = roomId;
     }
 
-    public String getCheckInDate() {
+    public Date getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(String checkInDate) {
+    public void setCheckInDate(Date checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public String getCheckOutDate() {
+    public Date getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(String checkOutDate) {
+    public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 }

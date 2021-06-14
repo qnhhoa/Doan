@@ -46,7 +46,7 @@ public class Customer_DAL {
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        return false;
+        return true;
         
     }
      public boolean Delete(Customer_DTO cus){
@@ -60,6 +60,7 @@ public class Customer_DAL {
                 System.out.println("Delete successfull");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -76,6 +77,7 @@ public class Customer_DAL {
                 System.out.println("Update successfull");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }

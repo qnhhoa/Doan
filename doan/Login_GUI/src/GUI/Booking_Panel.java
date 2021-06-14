@@ -5,12 +5,8 @@
  */
 package GUI;
 
-import BUS.Booking_BUS;
-import BUS.Customer_BUS;
-import BUS.Employee_BUS;
-import DTO.Booking_DTO;
-import DTO.Customer_DTO;
-import DTO.Employee_DTO;
+import BUS.*;
+import DTO.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +25,7 @@ public class Booking_Panel extends javax.swing.JFrame {
     Booking_BUS booking_bus = new Booking_BUS();
     Employee_BUS em_bus = new Employee_BUS();
     Customer_BUS cus_bus = new Customer_BUS();
+    Room_BUS room_bus = new Room_BUS();
     public Booking_Panel() {
         initComponents();
         setLocationRelativeTo(null);
@@ -162,7 +159,9 @@ public class Booking_Panel extends javax.swing.JFrame {
 
     private void btnBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBookMouseClicked
        
-       cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser.getDate()));
+      boolean CheckInsertCus = cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser.getDate()));
+       
+       // get clientid to insert clientid into booking
        List<Customer_DTO> list_cus = new ArrayList<>();
        list_cus=cus_bus.Select("select * from Client where CCCD = '"+CCCD_KH_TextField.getText()+"'");
        Object[] row = new Object[1];
@@ -172,8 +171,27 @@ public class Booking_Panel extends javax.swing.JFrame {
             System.out.println(row[0]);
         });      
        
-       //String bookId, String customerId, String roomId, String checkInDate, String checkOutDate
-       booking_bus.Insert(new Booking_DTO("",row[0].toString(),RoomID_TextField.getText(),"",""));
+       boolean CheckInsertBK = booking_bus.Insert(new Booking_DTO("",row[0].toString(),RoomID_TextField.getText(),null,null));
+       
+     // get bookingid to insert bookingid into room  
+       List<Booking_DTO> list_Booking=booking_bus.Select("select * from Booking where ClientID = '"+row[0].toString()+"'");
+       String bookingId = "";
+       System.out.println(list_Booking.size());
+       
+       for (Booking_DTO bk : list_Booking){
+           bookingId=bk.getBookId();
+           System.out.println(bookingId);
+       }   
+       
+       // insert bookingid into room and reset txt
+       if (CheckInsertBK==true && CheckInsertCus==true){
+           room_bus.Update(new Room_DTO(RoomID_TextField.getText(),null,null,null,bookingId));
+           Name_KH_TextField.setText(null);
+           CCCD_KH_TextField.setText(null);
+           Phone_KH_TextField.setText(null);
+           DOBirth_Chooser.setDate(null);
+       };
+       
     }//GEN-LAST:event_btnBookMouseClicked
 
     private void btnBookMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBookMouseEntered

@@ -40,6 +40,7 @@ public class Employee_DAL {
                 System.out.println("Insert fail");
             }
         }catch (SQLException ex){
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -58,6 +59,7 @@ public class Employee_DAL {
                 System.out.println("Delete successfull");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -74,6 +76,7 @@ public class Employee_DAL {
                 System.out.println("Update successfull");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -92,6 +95,7 @@ public class Employee_DAL {
                 list_em.add(em);
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
         }
         return list_em;

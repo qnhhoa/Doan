@@ -6,6 +6,7 @@
 package DAL;
 
 import DTO.Room_DTO;
+
 import java.sql.*;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -21,16 +22,24 @@ import javax.swing.JOptionPane;
 public class Room_DAL {
     public Room_DAL(){};
     public  boolean Update(Room_DTO room) {
+          String sql;
         try {
-            Object arg[]= {room.getEmployeeId(),room.getStatus(),room.getTypeOfRoom(),room.getRoomId()};
-            String sql;
-            sql = String.format("UPDATE Room SET employeeId='%s', Status='%s', TypeOfRoom='%s' WHERE RoomId  = '%s'", arg);
+            if (room.getEmployeeId()==null && room.getTypeOfRoom()==null && room.getStatus()==null){
+                Object arg[]= {room.getBookingId(),room.getRoomId()};
+          
+            sql = String.format("UPDATE Room SET  BookingID='%s' WHERE RoomId  = '%s'", arg);
+            }else{
+                Object arg[]= {room.getEmployeeId(),room.getStatus(),room.getTypeOfRoom(),room.getBookingId(),room.getRoomId()};
+            sql = String.format("UPDATE Room SET StaffID='%s', cStatus='%s', TypeOfRoom='%s', BookingID='%s' WHERE RoomId  = '%s'", arg);
+            }
+            
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
                 System.out.println("Update successfull");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -45,12 +54,30 @@ public class Room_DAL {
             String sql = selectSql;
             ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
             while (rs.next()){
-                Room_DTO room = new Room_DTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                Room_DTO room = new Room_DTO(rs.getString("RoomID"),rs.getString("TypeofRoom"),rs.getString("cStatus"),rs.getString("StaffID"),rs.getString("BookingID"));
                 list_room.add(room);
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
         }
         return list_room;
+    }
+    public List SelectDataJoinBooking(String selectSql){
+        List<Object[]> list_Object = new ArrayList<>(); 
+        try {
+     
+            String sql = selectSql;
+            ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
+            while (rs.next()){
+               Object[] object = {rs.getString("RoomID"),rs.getString("TypeofRoom"),rs.getString("cStatus"),rs.getString("StaffID")
+                                 ,rs.getString("BookingID"),rs.getString("ClientID"),rs.getString("CheckInDate"),rs.getString("CheckOutDate")};
+                list_Object.add(object);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return list_Object;
     }
 }

@@ -15,14 +15,22 @@ public class Room_DTO {
     String typeOfRoom;
     String status;
     String employeeId;
+    String bookingId;
     
     
-    public Room_DTO(String roomId, String typeOfRoom, String status, String employeeId) {
+    public Room_DTO(String roomId, String typeOfRoom, String status, String employeeId, String bookingId) {
         this.roomId = roomId;
         this.typeOfRoom = typeOfRoom;
         this.status = status;
         this.employeeId = employeeId;
-       
+        this.bookingId = bookingId;
+    }
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 
   

@@ -5,16 +5,17 @@
  */
 package GUI;
 
-import BUS.Employee_BUS;
-import BUS.Room_BUS;
-import DAL.Employee_DAL;
-import DTO.Employee_DTO;
-import DTO.Room_DTO;
+import BUS.*;
+import DAL.*;
+import DTO.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -82,7 +83,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnCheckIn_P = new javax.swing.JLabel();
         btnCheckOut_P = new javax.swing.JLabel();
         btnClear_P = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        lb_CheckInDate = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -473,13 +474,13 @@ public class MainFrame extends javax.swing.JFrame {
         btnClear_P.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         QLP_Panel.add(btnClear_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 260, 50));
 
-        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel25.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("dd/mm/yyyy");
-        jLabel25.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jLabel25.setOpaque(true);
-        QLP_Panel.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 390, 40));
+        lb_CheckInDate.setBackground(new java.awt.Color(255, 255, 255));
+        lb_CheckInDate.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
+        lb_CheckInDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_CheckInDate.setText("dd/mm/yyyy");
+        lb_CheckInDate.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        lb_CheckInDate.setOpaque(true);
+        QLP_Panel.add(lb_CheckInDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 390, 40));
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/pic/QLP_pic/ChekIN_Bgr.png"))); // NOI18N
         QLP_Panel.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 540, 50));
@@ -504,11 +505,11 @@ public class MainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Room ID", "Type Of Room", "Status", "Booking ID", "Customer ID"
+                "Room ID", "Type Of Room", "Status", "Booking ID", "Customer ID", "CheckInDate", "CheckOutDate"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -521,6 +522,11 @@ public class MainFrame extends javax.swing.JFrame {
         Phong_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         Phong_Table.getTableHeader().setResizingAllowed(false);
         Phong_Table.getTableHeader().setReorderingAllowed(false);
+        Phong_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Phong_TableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(Phong_Table);
 
         QLP_Panel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 880, 460));
@@ -1091,6 +1097,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnCheckIn_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckIn_PMouseClicked
         // TODO add your handling code here:
+         System.out.println(varContainBookingID);
+      
+       Date date = Calendar.getInstance().getTime();  
+       System.out.println("Date "+date);
+       
+       bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),date,null));
+       DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
+       model.setRowCount(0);
+       GetDataFromDTBToRoomTable();
+       
     }//GEN-LAST:event_btnCheckIn_PMouseClicked
 
     private void btnCheckOut_PMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckOut_PMouseEntered
@@ -1375,6 +1391,34 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ID_TextFieldActionPerformed
 
+    private void Phong_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phong_TableMouseClicked
+        // TODO add your handling code here:
+         int i = Phong_Table.getSelectedRow();
+        TableModel tbModel = Phong_Table.getModel();
+        
+        ID_TextField.setText(tbModel.getValueAt(i, 0).toString());
+        TypeRoomComboBox.setSelectedItem(tbModel.getValueAt(i, 1).toString());
+        StatusComboBox.setSelectedItem(tbModel.getValueAt(i, 2).toString());
+        if (tbModel.getValueAt(i, 3) != null){
+            BookID_TextField.setText(tbModel.getValueAt(i, 3).toString());
+        }else{
+            BookID_TextField.setText("");
+        }
+//        BookID_TextField.setText(tbModel.getValueAt(i, 3).toString());
+        if(tbModel.getValueAt(i,4)!=null){
+             CustomerID_TextField.setText(tbModel.getValueAt(i, 4).toString());
+        }else{
+             CustomerID_TextField.setText("");
+        }
+        if(tbModel.getValueAt(i,5)!=null){
+             lb_CheckInDate.setText(tbModel.getValueAt(i, 5).toString());
+        }else{
+             lb_CheckInDate.setText("");
+        }
+
+        varContainBookingID=BookID_TextField.getText();
+    }//GEN-LAST:event_Phong_TableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1410,24 +1454,65 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     
-     public void GetDataFromDTBToRoomTable(){
+  public void GetDataFromDTBToRoomTable(){
         List<Room_DTO> list_room = new ArrayList<>();
+        List<Object[]> list_obj;
         DefaultTableModel model= (DefaultTableModel)Phong_Table.getModel();
         
         list_room = room_bus.SelectData("select * from Room");
         Object[] row= new Object[7];
-        list_room.forEach((Room_DTO room) -> {
+        
+        for(Room_DTO room : list_room){
+            row= new Object[7];
+//            System.out.println("1 "+room.getStatus().equals("Booked"));
+//            System.out.println("0 "+room.getStatus().equals("Check In"));
+//            System.out.println("-----------------");
+//            System.out.println("1 "+room.getStatus());
+//            System.out.println("0 "+room.getStatus());
+//                        System.out.println("-----------------");
+
             
             row[0]=room.getRoomId();
             row[1]=room.getTypeOfRoom();
             row[2]=room.getStatus();
-            row[3]=room.getEmployeeId();
+            if (room.getStatus().equals("Booked") || room.getStatus().equals("Check In")){
+                
+                String sql = String.format("select * from Room, Booking Where Booking.BookingId = Room.BookingId AND Room.RoomID='%s'", room.getRoomId());
+                list_obj = new ArrayList<>();
+                list_obj = room_bus.SelectDataJoinBooking(sql);
+                           //     System.out.println(sql);
+
+               // System.out.println(list_obj.size());
+                if (list_obj.size()>0){
+                row[3]=list_obj.get(0)[4].toString();
+                row[4]=list_obj.get(0)[5].toString();
+                
+                /// check in date and out date is null
+                if (list_obj.get(0)[6]==null && list_obj.get(0)[7]==null){
+                    row[5]=null;
+                    row[6]=null;
+                    
+                } else if(list_obj.get(0)[7]==null){
+                    row[5]=list_obj.get(0)[6].toString();
+                    row[6]=null;
+                    
+                } else if (list_obj.get(0)[6]==null){
+                    row[5]=null;
+                    row[6]=list_obj.get(0)[7].toString();
+                }else{
+                    row[5]=list_obj.get(0)[6].toString();
+                    row[6]=list_obj.get(0)[7].toString();
+                }
+                
+                }
+                
+            }
+            
           
-            model.addRow(row);  
+            model.addRow(row); 
+        }
+        
 
-
-        });
-        ;
     }
     public void GetDataFromDTBToStaffTable(){
         List<Employee_DTO> list_em = new ArrayList<>();
@@ -1449,9 +1534,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
         ;
     }
+    private String varContainBookingID = "";
     
     Employee_BUS em_BUS = new Employee_BUS();
     Room_BUS room_bus = new Room_BUS();
+    Booking_BUS bk_bus = new Booking_BUS();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adr_NV_TextField;
@@ -1532,7 +1619,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1544,6 +1630,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lb_CheckInDate;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

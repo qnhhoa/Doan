@@ -25,4 +25,7 @@ public class Room_BUS {
      public List SelectData(String sql){
        return room_dal.SelectData(sql);
     };
+     public List SelectDataJoinBooking(String sql){
+        return room_dal.SelectDataJoinBooking(sql);
+    }
 }
