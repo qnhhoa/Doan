@@ -13,8 +13,12 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
@@ -784,7 +788,7 @@ public class MainFrame extends javax.swing.JFrame {
         NV_Panel.add(btnDelete_NV, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 190, 120, 50));
 
         DOBirth_Chooser_NV.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        DOBirth_Chooser_NV.setDateFormatString("dd-MM-yyyy");
+        DOBirth_Chooser_NV.setDateFormatString("yyyy-MM-dd");
         DOBirth_Chooser_NV.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         NV_Panel.add(DOBirth_Chooser_NV, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 390, 40));
 
@@ -913,6 +917,11 @@ public class MainFrame extends javax.swing.JFrame {
         NV_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         NV_Table.getTableHeader().setResizingAllowed(false);
         NV_Table.getTableHeader().setReorderingAllowed(false);
+        NV_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NV_TableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(NV_Table);
 
         NV_Panel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 880, 390));
@@ -1433,6 +1442,33 @@ public class MainFrame extends javax.swing.JFrame {
         varContainBookingID=BookID_TextField.getText();
     }//GEN-LAST:event_Phong_TableMouseClicked
 
+    private void NV_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NV_TableMouseClicked
+        // TODO add your handling code here:
+        int i = NV_Table.getSelectedRow();
+//        Employee_DTO em = list.get(i);
+        StaffID_TextField.setText(model.getValueAt(i,0).toString());
+        Name_NV_TextField.setText(model.getValueAt(i,1).toString());
+        Gender_NV_TextField.setText(model.getValueAt(i,2).toString());
+        Adr_NV_TextField.setText(model.getValueAt(i,3).toString());
+        Phone_NV_TextField.setText(model.getValueAt(i,4).toString());
+        //String date = model.getValueAt(i,5).toString();
+        Date dat = null;
+        try {
+            
+            dat = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(i,5).toString());
+            DOBirth_Chooser_NV.setDate(dat); 
+        } catch (ParseException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                     
+        String de = model.getValueAt(i,6).toString();        
+        for(int k =0; k < DePart_NV_TextField.getItemCount(); k++) {
+        if(DePart_NV_TextField.getItemAt(k).toString().equalsIgnoreCase(de)) {
+            DePart_NV_TextField.setSelectedIndex(k);
+        }
+        }
+    }//GEN-LAST:event_NV_TableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1528,19 +1564,20 @@ public class MainFrame extends javax.swing.JFrame {
         
 
     }
+    DefaultTableModel model;
     public void GetDataFromDTBToStaffTable(){
         List<Employee_DTO> list_em = new ArrayList<>();
-        DefaultTableModel model= (DefaultTableModel)NV_Table.getModel();
-        list_em = em_BUS.SelectData("select * from Staff");
+        model = (DefaultTableModel)NV_Table.getModel();
+        list_em = em_BUS.SelectData("SELECT StaffID, FullName, Gender, cAddress, PhoneNumber, DateofBirth, Position From Staff");
         Object[] row= new Object[7];
         list_em.forEach((Employee_DTO em) -> {
             
             row[0]=em.getStaffId();
             row[1]=em.getFullName();
             row[2]=em.getGender();
-            row[3]=em.getDateOfBird();
+            row[5]=em.getDateOfBird();
             row[4]=em.getPhoneNumber();
-            row[5]=em.getAddress();
+            row[3]=em.getAddress();
             row[6]=em.getDepartment();
             model.addRow(row);  
 

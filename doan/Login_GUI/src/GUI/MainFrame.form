@@ -1342,7 +1342,7 @@
                         <LineBorder roundedCorners="true" thickness="2"/>
                       </Border>
                     </Property>
-                    <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
+                    <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="UTM Avo" size="12" style="0"/>
                     </Property>
@@ -1627,6 +1627,9 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="NV_TableMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
