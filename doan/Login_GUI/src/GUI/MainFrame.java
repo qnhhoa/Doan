@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
 /**
@@ -1126,15 +1127,28 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBook_PMouseExited
 
     private void btnBook_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBook_PMouseClicked
+         if (StatusComboBox.getSelectedItem().toString().equals("Available")){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Booking_Panel().setVisible(true);
             }
         });
+        }else{
+            JOptionPane.showMessageDialog(null,"Phòng Hiện Tại Đã Có Khách Hoặc Trong Tình Trạng Sữa Chữa","Thông Báo",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnBook_PMouseClicked
 
     private void btnCheckOut_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckOut_PMouseClicked
         // TODO add your handling code here:
+         System.out.println(varContainBookingID);
+      
+       Date date = Calendar.getInstance().getTime();  
+       System.out.println("Date "+date);
+       
+       bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),null,date));
+       DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
+       model.setRowCount(0);
+       GetDataFromDTBToRoomTable();
     }//GEN-LAST:event_btnCheckOut_PMouseClicked
 
     private void LogoLableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoLableMouseClicked

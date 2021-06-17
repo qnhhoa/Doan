@@ -24,13 +24,13 @@ public class ConnectionDB_DAL {
 //            + "databaseName=testdb;"
 //            + "integratedSecurity=true";
 //    private static String USER_NAME = "sa";
-//    private static String PASSWORD = "1234567890";
+//    private static String PASSWORD = "1234567890";ST4
     public static Connection conn;
 
     public static Connection OpenConnection(){
         try {
                     //Class.forName(com.microsoft.sqlserver.jdbc.SQLServerDriver);
-                    String dbURL = "jdbc:sqlserver://DESKTOP-CNAUT3O\\SQLEXPRESS;databaseName=Hotel_1";
+                    String dbURL = "jdbc:sqlserver://DESKTOP-C2HS95C\\LEO297;databaseName=Hotel";
                     String user = "sa";
                     String pass = "sa";
                     conn = DriverManager.getConnection(dbURL, user, pass);

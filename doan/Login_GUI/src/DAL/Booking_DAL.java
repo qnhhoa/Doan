@@ -74,7 +74,7 @@ public class Booking_DAL {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
             
-            System.out.println("dateCheckin " + formatter.format(booking.getCheckInDate()));
+//            System.out.println("dateCheckin " + formatter.format(booking.getCheckInDate()));
             
             String sql;
             if (booking.getCheckInDate()==null && booking.getCheckOutDate()==null){
@@ -85,8 +85,8 @@ public class Booking_DAL {
                 Object[] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckInDate()),booking.getBookId()};
                 sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s', CheckInDate='%s' WHERE bookingId  = '%s'", arg);
             }else {
-                Object[] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckInDate()),formatter.format(booking.getCheckOutDate()),booking.getBookId()};
-                sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s', CheckInDate='%s', CheckOutDate='%s' WHERE bookingId  = '%s'", arg);
+                Object[] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckOutDate()),booking.getBookId()};
+                sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s', CheckOutDate='%s' WHERE bookingId  = '%s'", arg);
             }
             
             System.out.println(sql);

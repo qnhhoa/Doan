@@ -185,7 +185,7 @@ public class Booking_Panel extends javax.swing.JFrame {
        
        // insert bookingid into room and reset txt
        if (CheckInsertBK==true && CheckInsertCus==true){
-           room_bus.Update(new Room_DTO(RoomID_TextField.getText(),null,null,null,bookingId));
+           room_bus.Update(new Room_DTO(RoomID_TextField.getText(),null,"Booked",null,bookingId));
            Name_KH_TextField.setText(null);
            CCCD_KH_TextField.setText(null);
            Phone_KH_TextField.setText(null);
