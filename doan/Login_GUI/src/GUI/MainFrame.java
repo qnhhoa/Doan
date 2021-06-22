@@ -548,6 +548,11 @@ public class MainFrame extends javax.swing.JFrame {
         btnClear_KH.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnClear_KH.setText("Clear");
         btnClear_KH.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btnClear_KH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClear_KHMouseClicked(evt);
+            }
+        });
         KH_Panel.add(btnClear_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 120, 50));
 
         btnFind_KH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/pic/QLP_pic/btnFind1.png"))); // NOI18N
@@ -1187,6 +1192,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnAdd_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd_KHMouseClicked
         // TODO add your handling code here:
+        
+        if(cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),
+                       DOBirth_Chooser_KH.getDate()))){
+            JOptionPane.showMessageDialog(null,"Thông Báo","Insert Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+        };
     }//GEN-LAST:event_btnAdd_KHMouseClicked
 
     private void btnAdd_KHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd_KHMouseEntered
@@ -1199,6 +1209,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnUpdate_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_KHMouseClicked
         // TODO add your handling code here:
+        if(cus_bus.Update(new Customer_DTO(CusID_TextField.getText(),Name_KH_TextField.getText()
+                          ,CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser_KH.getDate()))){
+            JOptionPane.showMessageDialog(null,"Thông Báo","Update Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+        };
     }//GEN-LAST:event_btnUpdate_KHMouseClicked
 
     private void btnUpdate_KHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_KHMouseEntered
@@ -1211,6 +1225,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnDelete_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelete_KHMouseClicked
         // TODO add your handling code here:
+        if(cus_bus.Delete(new Customer_DTO(CusID_TextField.getText(),null,null,null,null))){
+            JOptionPane.showMessageDialog(null,"Thông Báo","Delete Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnDelete_KHMouseClicked
 
     private void btnDelete_KHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelete_KHMouseEntered
@@ -1493,6 +1510,13 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_KH_TableMouseClicked
+
+    private void btnClear_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClear_KHMouseClicked
+        // TODO add your handling code here:
+       DefaultTableModel model = (DefaultTableModel) KH_Table.getModel();
+       model.setRowCount(0);
+       GetDataFromCusTable();
+    }//GEN-LAST:event_btnClear_KHMouseClicked
 
     /**
      * @param args the command line arguments
