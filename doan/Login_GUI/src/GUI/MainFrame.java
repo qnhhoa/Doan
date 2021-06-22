@@ -42,6 +42,8 @@ public class MainFrame extends javax.swing.JFrame {
         
         GetDataFromDTBToRoomTable();
         GetDataFromDTBToStaffTable();
+        GetDataFromLSPTable();
+        GetDataFromCusTable();
     }
 
     /**
@@ -711,6 +713,11 @@ public class MainFrame extends javax.swing.JFrame {
         KH_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         KH_Table.getTableHeader().setResizingAllowed(false);
         KH_Table.getTableHeader().setReorderingAllowed(false);
+        KH_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                KH_TableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(KH_Table);
 
         KH_Panel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 880, 510));
@@ -1469,6 +1476,24 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_NV_TableMouseClicked
 
+    private void KH_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_KH_TableMouseClicked
+        // TODO add your handling code here:
+        int i = KH_Table.getSelectedRow();
+        CusID_TextField.setText(model1.getValueAt(i,0).toString());
+        Name_KH_TextField.setText(model1.getValueAt(i,1).toString());
+        CCCD_KH_TextField.setText(model1.getValueAt(i,2).toString());
+        Phone_KH_TextField.setText(model1.getValueAt(i,3).toString());
+        
+        Date dat = null;
+        try {
+            
+            dat = new SimpleDateFormat("yyyy-MM-dd").parse((String)model1.getValueAt(i,4).toString());
+            DOBirth_Chooser_KH.setDate(dat); 
+        } catch (ParseException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_KH_TableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1585,11 +1610,47 @@ public class MainFrame extends javax.swing.JFrame {
         });
         ;
     }
+    
+    public void GetDataFromLSPTable() {       
+        List<LSP_DTO> list_lsp = new ArrayList<>();
+        DefaultTableModel model= (DefaultTableModel)LSDP_Table.getModel();
+        list_lsp = lsp_bus.SelectData("Select Booking.RoomID, ClientID, StaffID,CheckInDate, CheckOutDate From Booking, Room where Booking.RoomID = Room.RoomID");
+        Object[] row= new Object[5];
+        list_lsp.forEach((LSP_DTO lsp) -> {
+            row[0] = lsp.getRoomId();
+            row[1] = lsp.getCusId();
+            row[2] = lsp.getStaffId();
+            row[3] = lsp.getCheckInDate();
+            row[4] = lsp.getCheckOutDate();
+            model.addRow(row);
+        });
+        ;
+    }
+    
+    DefaultTableModel model1;
+    public void GetDataFromCusTable() {       
+        List<Customer_DTO> list_cus = new ArrayList<>();
+        model1 = (DefaultTableModel)KH_Table.getModel();
+        list_cus = cus_bus.Select("SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client");
+        Object[] row= new Object[5];
+        list_cus.forEach((Customer_DTO cus) -> {
+            row[0] = cus.getCustomer_id();
+            row[1] = cus.getFullname();
+            row[2] = cus.getCccd();
+            row[3] = cus.getPhoneNumber();
+            row[4] = cus.getDateOfBird();
+            model1.addRow(row);
+        });
+        ;
+    }
+    
     private String varContainBookingID = "";
     
     Employee_BUS em_BUS = new Employee_BUS();
     Room_BUS room_bus = new Room_BUS();
     Booking_BUS bk_bus = new Booking_BUS();
+    LSP_BUS lsp_bus = new LSP_BUS();
+    Customer_BUS cus_bus = new Customer_BUS();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adr_NV_TextField;
