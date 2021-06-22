@@ -68,7 +68,8 @@ public class Customer_DAL {
     }
     public boolean Update(Customer_DTO cus) {
         try {
-            Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),cus.getDateOfBird(),cus.getCustomer_id()};
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),df.format(cus.getDateOfBird()),cus.getCustomer_id()};
             String sql;
             sql = String.format("UPDATE Client SET FullName='%s', cccd='%s', phoneNumber='%s', DateOfBird='%s' WHERE CID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
