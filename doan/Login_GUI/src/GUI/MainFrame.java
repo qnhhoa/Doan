@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
+import GUI.Login_GUI;
 
 /**
  *
@@ -1040,7 +1041,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQLKHMouseClicked
 
     private void btnQLNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNVMouseClicked
-        TabPanel.setSelectedComponent(NV_Panel);
+        
+        Login_GUI login_GUI = new Login_GUI();
+        if(login_GUI.flag == '1'){
+            TabPanel.setSelectedComponent(NV_Panel);
+        }else{
+            JOptionPane.showMessageDialog(this, "You do not have permission to access this page.");
+        }
     }//GEN-LAST:event_btnQLNVMouseClicked
 
     private void btnLSDPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLSDPMouseClicked

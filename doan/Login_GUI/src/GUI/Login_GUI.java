@@ -22,7 +22,7 @@ public class Login_GUI extends javax.swing.JFrame {
 
     
     /** Creates new form Login_GUI */
-    
+    public static char flag;
     public Login_GUI() {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -188,8 +188,8 @@ public class Login_GUI extends javax.swing.JFrame {
         
         try {
             if (login_BUS.Login(login_DTO)){
+                this.flag = login_DTO.getflag();
                 java.awt.EventQueue.invokeLater(new Runnable() {
-                    char flag = login_DTO.getflag();
                     public void run() {
                         new MainFrame().setVisible(true);
                 
@@ -200,6 +200,8 @@ public class Login_GUI extends javax.swing.JFrame {
             this.setVisible(false);
        }else {
             JOptionPane.showMessageDialog(this, "Your ID or Password was wrong");
+            IDTextField.setText("");
+            PasswordField.setText("");
         }
         }catch (Exception e){
         }
