@@ -5,6 +5,10 @@
  */
 package DTO;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author TienVinh
@@ -15,10 +19,10 @@ public class Employee_DTO {
     String gender;
     String address;
     String phoneNumber;
-    String dateOfBird;
+    Date dateOfBird;
     String department;
 
-    public Employee_DTO(String staffId, String fullName, String gender, String address, String phoneNumber, String dateOfBird, String department) {
+    public Employee_DTO(String staffId, String fullName, String gender, String address, String phoneNumber, Date dateOfBird, String department) {
         this.staffId = staffId;
         this.fullName = fullName;
         this.gender = gender;
@@ -68,11 +72,11 @@ public class Employee_DTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDateOfBird() {
+    public Date getDateOfBird() {
         return dateOfBird;
     }
 
-    public void setDateOfBird(String dateOfBird) {
+    public void setDateOfBird(Date dateOfBird) {
         this.dateOfBird = dateOfBird;
     }
 
@@ -82,6 +86,22 @@ public class Employee_DTO {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+    public boolean checkContain(String str){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if(staffId.toUpperCase().contains(str.toUpperCase())==true ||
+           fullName.toUpperCase().contains(str.toUpperCase())==true ||
+           gender.toUpperCase().contains(str.toUpperCase())==true ||
+           address.toUpperCase().contains(str.toUpperCase())==true ||
+           phoneNumber.toUpperCase().contains(str.toUpperCase())==true ||
+           df.format(dateOfBird).toUpperCase().contains(str.toUpperCase())==true ||
+           department.toUpperCase().contains(str.toUpperCase())==true)   {
+            return true;
+        }else{
+            return false;
+        }
+        
+    
     }
     
 }

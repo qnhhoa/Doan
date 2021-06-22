@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -65,5 +67,19 @@ public class Customer_DTO {
     public void setDateOfBird(Date dateOfBird) {
         this.dateOfBird = dateOfBird;
     }
+
+    public boolean checkContain(String str){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if(customer_id.toUpperCase().contains(str.toUpperCase())==true ||
+           fullname.toUpperCase().contains(str.toUpperCase())==true ||
+           cccd.toUpperCase().contains(str.toUpperCase())==true ||
+           phoneNumber.toUpperCase().contains(str.toUpperCase())==true ||
+           df.format(dateOfBird).toUpperCase().contains(str.toUpperCase())==true){
+            return true;
+        }else{
+            return false;
+        }
+        
     
+    }
 }

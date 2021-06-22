@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -63,5 +65,20 @@ public class LSP_DTO {
 
     public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
+    }
+
+    public boolean checkContain(String str){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if(roomId.toUpperCase().contains(str.toUpperCase())==true ||
+           cusId.toUpperCase().contains(str.toUpperCase())==true ||
+           staffId.toUpperCase().contains(str.toUpperCase())==true ||
+           df.format(checkInDate).toUpperCase().contains(str.toUpperCase())==true ||
+           df.format(checkOutDate).toUpperCase().contains(str.toUpperCase())==true)   {
+            return true;
+        }else{
+            return false;
+        }
+        
+    
     }
 }

@@ -13,6 +13,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,10 +28,11 @@ public class Employee_DAL {
     };
     public boolean Insert(Employee_DTO em){
         try {
-            Object arg[]= {em.getStaffId(),em.getFullName(),em.getGender(),em.getAddress(),em.getPhoneNumber(),em.getDateOfBird(),em.getDepartment()};
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Object arg[]= {em.getFullName(),em.getGender(),em.getAddress(),em.getPhoneNumber(),df.format(em.getDateOfBird()),em.getDepartment()};
 
             String em_SQL;
-            em_SQL = String.format("INSERT INTO Staff VALUES ('%s','%s','%s','%s','%s','%s','%s')",arg);
+            em_SQL = String.format("INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('%s','%s','%s','%s','%s','%s')",arg);
 
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
 
@@ -48,11 +51,12 @@ public class Employee_DAL {
     }
     public boolean Delete(Employee_DTO em){
         try {
+           
             Object arg[]= {em.getStaffId()};
             String sql;
       
             String studentFee_SQL;
-            studentFee_SQL = String.format("DELETE FROM Staff WHERE ID  = '%s'", arg);
+            studentFee_SQL = String.format("DELETE FROM Staff WHERE StaffID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(studentFee_SQL);
             if (rows > 0 ){
@@ -67,9 +71,10 @@ public class Employee_DAL {
     }
     public boolean Update(Employee_DTO em) {
         try {
-            Object arg[]= {em.getFullName(),em.getGender(),em.getAddress(),em.getPhoneNumber(),em.getDateOfBird(),em.getDepartment(),em.getStaffId()};
+             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Object arg[]= {em.getFullName(),em.getGender(),em.getAddress(),em.getPhoneNumber(),df.format(em.getDateOfBird()),em.getDepartment(),em.getStaffId()};
             String sql;
-            sql = String.format("UPDATE Staff SET FullName='%s', Gender='%s', cAddress='%s', phoneNumber='%s', DateOfBird='%s', Department='%s' WHERE ID  = '%s'", arg);
+            sql = String.format("UPDATE Staff SET FullName='%s', Gender='%s', cAddress='%s', phoneNumber='%s', DateOfBird='%s', Department='%s' WHERE StaffID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
@@ -91,7 +96,7 @@ public class Employee_DAL {
             String sql = selectSql;
             ResultSet rs = DAL.ConnectionDB_DAL.conn.createStatement().executeQuery(sql);
             while (rs.next()){
-                Employee_DTO em = new Employee_DTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7));
+                Employee_DTO em = new Employee_DTO(rs.getString("StaffID"),rs.getString("FullName"),rs.getString("Gender"),rs.getString("cAddress"),rs.getString("PhoneNumber"),rs.getDate("DateofBirth"),rs.getString("Position"));
                 list_em.add(em);
             }
         } catch (SQLException ex) {

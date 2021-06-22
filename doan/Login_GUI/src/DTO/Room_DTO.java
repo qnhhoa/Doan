@@ -5,6 +5,9 @@
  */
 package DTO;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author TienVinh
@@ -66,6 +69,19 @@ public class Room_DTO {
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
-
+    public boolean checkContain(String str){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if(roomId.toUpperCase().contains(str.toUpperCase())==true ||
+           typeOfRoom.toUpperCase().contains(str.toUpperCase())==true ||
+           status.toUpperCase().contains(str.toUpperCase())==true ||
+           employeeId.toUpperCase().contains(str.toUpperCase())==true ||
+           bookingId.toUpperCase().contains(str.toUpperCase())==true)   {
+            return true;
+        }else{
+            return false;
+        }
+        
+    
+    }
    
 }
