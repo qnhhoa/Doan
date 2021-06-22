@@ -5,17 +5,17 @@
  */
 package BUS;
 
-import DAL.Login_DAL;
-import DTO.Login_DTO;
+import DAL.Account_DAL;
+import DTO.Account_DTO;
 
 /**
  *
  * @author Huy
  */
-public class Login_BUS {
-    Login_DAL login_dal = new Login_DAL();
+public class Account_BUS {
+    Account_DAL login_dal = new Account_DAL();
     
-    public boolean Login (Login_DTO login_DTO){
+    public boolean Login (Account_DTO login_DTO){
         return login_dal.Login(login_DTO);
      };
     

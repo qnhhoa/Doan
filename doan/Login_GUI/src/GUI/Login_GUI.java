@@ -6,7 +6,7 @@
 
 package GUI;
 
-import BUS.Login_BUS;
+import BUS.Account_BUS;
 import BUS.*;
 import DTO.*;
 import javax.swing.*;
@@ -179,11 +179,11 @@ public class Login_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordFieldFocusLost
 
     private void SignInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignInButtonMouseClicked
-        Login_BUS login_BUS = new Login_BUS();
+        Account_BUS login_BUS = new Account_BUS();
         
         String ID = IDTextField.getText();
         String Pass = PasswordField.getText();
-        Login_DTO login_DTO = new Login_DTO(ID,Pass);
+        Account_DTO login_DTO = new Account_DTO(ID,Pass);
         
         
         try {

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package DAL;
-import DTO.Login_DTO;
+import DTO.Account_DTO;
 import java.sql.*;
 import javax.swing.JOptionPane;
 //import DAL.ConnectionDB_DAL;
@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author Huy
  */
-public class Login_DAL {
+public class Account_DAL {
     Connection connection=null;
     Statement stm=null;
     ResultSet set=null;
         
-    public boolean Login(Login_DTO login_DTO){
+    public boolean Login(Account_DTO login_DTO){
         try{
             connection = DAL.ConnectionDB_DAL.OpenConnection();
             String query ="select * from Users where Usrname='"+login_DTO.getID()+"' and cPassword='"+login_DTO.getPass()+"'";

@@ -9,14 +9,14 @@ package DTO;
  *
  * @author Huy
  */
-public class Login_DTO {
+public class Account_DTO {
     static String ID;
     String Pass;
     char flag;
-    public Login_DTO (){
+    public Account_DTO (){
     }
     
-    public Login_DTO (String ID, String Pass) {
+    public Account_DTO (String ID, String Pass) {
         this.ID = ID;
         this.Pass = Pass;
     }

@@ -53,7 +53,7 @@ public class Customer_DAL {
         try {
             Object arg[]= {cus.getCustomer_id()};
             String sql;
-            sql = String.format("DELETE FROM Client WHERE ID  = '%s'", arg);
+            sql = String.format("DELETE FROM Client WHERE ClientID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0 ){
@@ -71,7 +71,7 @@ public class Customer_DAL {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),df.format(cus.getDateOfBird()),cus.getCustomer_id()};
             String sql;
-            sql = String.format("UPDATE Client SET FullName='%s', cccd='%s', phoneNumber='%s', DateOfBird='%s' WHERE CID  = '%s'", arg);
+            sql = String.format("UPDATE Client SET FullName='%s', cccd='%s', phoneNumber='%s', DateOfBird='%s' WHERE ClientID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){

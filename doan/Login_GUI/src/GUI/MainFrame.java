@@ -952,6 +952,11 @@ public class MainFrame extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
         jButton1.setText("Refesh");
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         LSDP_Panel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 130, 30));
 
         LSDP_Table.setFont(new java.awt.Font("UTM Avo", 0, 12)); // NOI18N
@@ -1524,6 +1529,11 @@ public class MainFrame extends javax.swing.JFrame {
        model.setRowCount(0);
        GetDataFromCusTable();
     }//GEN-LAST:event_btnClear_KHMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        GetDataFromLSPTable();
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
