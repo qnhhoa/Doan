@@ -6,6 +6,7 @@
 package BUS;
 
 import DAL.Login_DAL;
+import DTO.Login_DTO;
 
 /**
  *
@@ -13,11 +14,9 @@ import DAL.Login_DAL;
  */
 public class Login_BUS {
     Login_DAL login_dal = new Login_DAL();
-    public Login_BUS (){
-    };
     
-    public boolean Login (String IDTextField, String PasswordField){
-        return login_dal.Login(IDTextField, PasswordField);
+    public boolean Login (Login_DTO login_DTO){
+        return login_dal.Login(login_DTO);
      };
     
 }
