@@ -10,15 +10,23 @@ package DTO;
  * @author Huy
  */
 public class Account_DTO {
-    static String ID;
+    
+    String ID;
     String Pass;
     char flag;
+    String fullname;
+    String sdt;
+    
     public Account_DTO (){
     }
     
     public Account_DTO (String ID, String Pass) {
         this.ID = ID;
         this.Pass = Pass;
+    }
+    
+    public void setID(String ID) {
+        this.ID=ID;
     }
     
     public String getID() {
@@ -28,6 +36,10 @@ public class Account_DTO {
     public String getPass() {
         return Pass;
     }
+    
+    public void setPass(String Pass) {
+        this.Pass = Pass;
+    }
 
     public char getflag() {
         return flag;
@@ -35,5 +47,21 @@ public class Account_DTO {
 
     public void setflag(char flag) {
         this.flag = flag;
+    }
+    
+    public String getfullname() {
+        return fullname;
+    }
+    
+    public void setfullname(String fullname) {
+        this.fullname = fullname;
+    }
+    
+    public String getsdt() {
+        return sdt;
+    }
+    
+    public void setsdt(String sdt) {
+        this.sdt = sdt;
     }
 }

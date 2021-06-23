@@ -13,10 +13,18 @@ import DTO.Account_DTO;
  * @author Huy
  */
 public class Account_BUS {
-    Account_DAL login_dal = new Account_DAL();
+    Account_DAL account_DAL = new Account_DAL();
     
-    public boolean Login (Account_DTO login_DTO){
-        return login_dal.Login(login_DTO);
+    public boolean Login (Account_DTO account_DTO){
+        return account_DAL.Login(account_DTO);
      };
     
+    
+    public void getINFO (Account_DTO account_DTO){
+        account_DAL.getINFO(account_DTO);
+    }
+    
+    public boolean checkPass (Account_DTO account_DTO){
+        return account_DAL.checkPass(account_DTO);
+    }
 }

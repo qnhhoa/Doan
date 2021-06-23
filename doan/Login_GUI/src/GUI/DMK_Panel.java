@@ -5,6 +5,10 @@
  */
 package GUI;
 
+import DTO.Account_DTO;
+import BUS.Account_BUS;
+import com.sun.source.tree.BreakTree;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Huy
@@ -14,6 +18,11 @@ public class DMK_Panel extends javax.swing.JFrame {
     /**
      * Creates new form DMK_Panel
      */
+    public Account_BUS account_BUS = new Account_BUS();
+    public Account_DTO account_DTO = new Account_DTO();
+    //public String pass;
+    
+    
     public DMK_Panel() {
         initComponents();
         setLocationRelativeTo(null);
@@ -63,11 +72,6 @@ public class DMK_Panel extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 MatKhauCu_TextFieldFocusLost(evt);
-            }
-        });
-        MatKhauCu_TextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MatKhauCu_TextFieldActionPerformed(evt);
             }
         });
         DMK_Panel.add(MatKhauCu_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 320, 40));
@@ -120,20 +124,20 @@ public class DMK_Panel extends javax.swing.JFrame {
     private void MatKhauCu_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauCu_TextFieldFocusLost
         if(MatKhauCu_TextField.getText().isEmpty()) {
             MatKhauCu_TextField.setText(".............");
+            
+        }else {
+            Login_GUI login_GUI = new Login_GUI();
+            
+            this.account_DTO.setID(login_GUI.ID);
+            this.account_DTO.setPass(MatKhauCu_TextField.getText());
+            
+            if(this.account_BUS.checkPass(this.account_DTO)) {
+                MatKhauCu_TextField.setText("");
+                JOptionPane.showMessageDialog(this, "Your old password was wrong.");
+                MatKhauCu_TextField.requestFocus();
+            }
         }
     }//GEN-LAST:event_MatKhauCu_TextFieldFocusLost
-
-    private void MatKhauMoi_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoi_TextFieldFocusGained
-        if(MatKhauMoi_TextField.getText().equals(".............")){
-            MatKhauMoi_TextField.setText("");
-        }
-    }//GEN-LAST:event_MatKhauMoi_TextFieldFocusGained
-
-    private void MatKhauMoi_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoi_TextFieldFocusLost
-        if(MatKhauMoi_TextField.getText().isEmpty()) {
-            MatKhauMoi_TextField.setText(".............");
-        }
-    }//GEN-LAST:event_MatKhauMoi_TextFieldFocusLost
 
     private void MatKhauMoiReW_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoiReW_TextFieldFocusGained
         if(MatKhauMoiReW_TextField.getText().equals(".............")){
@@ -148,12 +152,21 @@ public class DMK_Panel extends javax.swing.JFrame {
     }//GEN-LAST:event_MatKhauMoiReW_TextFieldFocusLost
 
     private void btnMDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMDKActionPerformed
-        // TODO add your handling code here:
+            
+           
     }//GEN-LAST:event_btnMDKActionPerformed
 
-    private void MatKhauCu_TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatKhauCu_TextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MatKhauCu_TextFieldActionPerformed
+    private void MatKhauMoi_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoi_TextFieldFocusGained
+        if(MatKhauMoi_TextField.getText().equals(".............")){
+                MatKhauMoi_TextField.setText("");
+            }
+    }//GEN-LAST:event_MatKhauMoi_TextFieldFocusGained
+
+    private void MatKhauMoi_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoi_TextFieldFocusLost
+        if(MatKhauMoi_TextField.getText().isEmpty()) {
+            MatKhauMoi_TextField.setText(".............");
+        }
+    }//GEN-LAST:event_MatKhauMoi_TextFieldFocusLost
 
     /**
      * @param args the command line arguments

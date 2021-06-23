@@ -22,7 +22,9 @@ public class Login_GUI extends javax.swing.JFrame {
 
     
     /** Creates new form Login_GUI */
+    public static String ID;
     public static char flag;
+    
     public Login_GUI() {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -183,8 +185,8 @@ public class Login_GUI extends javax.swing.JFrame {
         
         String ID = IDTextField.getText();
         String Pass = PasswordField.getText();
-        Account_DTO login_DTO = new Account_DTO(ID,Pass);
-        
+        Account_DTO login_DTO = new Account_DTO(ID,"12345678");
+        this.ID=ID;
         
         try {
             if (login_BUS.Login(login_DTO)){
