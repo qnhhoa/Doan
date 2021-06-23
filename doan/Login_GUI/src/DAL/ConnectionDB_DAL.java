@@ -30,8 +30,8 @@ public class ConnectionDB_DAL {
     public static Connection OpenConnection(){
         try {
                     //Class.forName(com.microsoft.sqlserver.jdbc.SQLServerDriver);
-                    String dbURL = "jdbc:sqlserver://DESKTOP-CNAUT3O\\SQLEXPRESS;databaseName=Hotel";
-                    String user = "ssa";
+                    String dbURL = "jdbc:sqlserver://LAPTOP-KNKAD2S0;databaseName=Hotel_1";
+                    String user = "sa";
                     String pass = "sa";
                     conn = DriverManager.getConnection(dbURL, user, pass);
          
