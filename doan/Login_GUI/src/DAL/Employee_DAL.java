@@ -74,7 +74,7 @@ public class Employee_DAL {
              DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Object arg[]= {em.getFullName(),em.getGender(),em.getAddress(),em.getPhoneNumber(),df.format(em.getDateOfBird()),em.getDepartment(),em.getStaffId()};
             String sql;
-            sql = String.format("UPDATE Staff SET FullName='%s', Gender='%s', cAddress='%s', phoneNumber='%s', DateOfBird='%s', Department='%s' WHERE StaffID  = '%s'", arg);
+            sql = String.format("UPDATE Staff SET FullName='%s', Gender='%s', cAddress='%s', phoneNumber='%s', DateofBirth='%s', Position='%s' WHERE StaffID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){

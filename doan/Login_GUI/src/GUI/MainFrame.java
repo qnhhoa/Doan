@@ -1119,6 +1119,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnUpdate_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_PMouseClicked
         // TODO add your handling code here:
+        if(room_bus.Update(new Room_DTO(ID_TextField.getText(),TypeRoomComboBox.getSelectedItem().toString()
+                          ,StatusComboBox.getSelectedItem().toString(),"", ""))){
+            JOptionPane.showMessageDialog(null,"Update Room Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+        };
     }//GEN-LAST:event_btnUpdate_PMouseClicked
 
     private void btnCheckIn_PMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckIn_PMouseEntered
@@ -1207,7 +1211,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         if(cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),
                        DOBirth_Chooser_KH.getDate()))){
-            JOptionPane.showMessageDialog(null,"Thông Báo","Insert Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Insert Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
         };
     }//GEN-LAST:event_btnAdd_KHMouseClicked
 
@@ -1223,7 +1227,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(cus_bus.Update(new Customer_DTO(CusID_TextField.getText(),Name_KH_TextField.getText()
                           ,CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser_KH.getDate()))){
-            JOptionPane.showMessageDialog(null,"Thông Báo","Update Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Update Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
         };
     }//GEN-LAST:event_btnUpdate_KHMouseClicked
 
@@ -1238,7 +1242,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnDelete_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelete_KHMouseClicked
         // TODO add your handling code here:
         if(cus_bus.Delete(new Customer_DTO(CusID_TextField.getText(),null,null,null,null))){
-            JOptionPane.showMessageDialog(null,"Thông Báo","Delete Customer Successfull!",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Delete Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnDelete_KHMouseClicked
 
@@ -1266,6 +1270,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnAdd_NVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd_NVMouseClicked
         // TODO add your handling code here:
+        if(em_BUS.Insert(new Employee_DTO("",Name_NV_TextField.getText(),Gender_NV_TextField.getText(),Adr_NV_TextField.getText(),Phone_NV_TextField.getText(),
+                       DOBirth_Chooser_NV.getDate(),DePart_NV_TextField.getSelectedItem().toString()))){
+            JOptionPane.showMessageDialog(null,"Insert Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+        };
     }//GEN-LAST:event_btnAdd_NVMouseClicked
 
     private void btnAdd_NVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd_NVMouseEntered
@@ -1278,6 +1286,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnUpdate_NVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_NVMouseClicked
         // TODO add your handling code here:
+        if(em_BUS.Update(new Employee_DTO(StaffID_TextField.getText(),Name_NV_TextField.getText(),Gender_NV_TextField.getText(),Adr_NV_TextField.getText(),Phone_NV_TextField.getText(),
+                       DOBirth_Chooser_NV.getDate(),DePart_NV_TextField.getSelectedItem().toString()))){
+            JOptionPane.showMessageDialog(null,"Update Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+        };
     }//GEN-LAST:event_btnUpdate_NVMouseClicked
 
     private void btnUpdate_NVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_NVMouseEntered
@@ -1290,6 +1302,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnDelete_NVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelete_NVMouseClicked
         // TODO add your handling code here:
+        if(em_BUS.Delete(new Employee_DTO(StaffID_TextField.getText(),null,null,null,null,null,null))){
+            JOptionPane.showMessageDialog(null,"Delete Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnDelete_NVMouseClicked
 
     private void btnDelete_NVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDelete_NVMouseEntered
