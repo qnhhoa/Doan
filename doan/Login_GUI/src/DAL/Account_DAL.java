@@ -78,21 +78,26 @@ public class Account_DAL {
 
     }
     public boolean checkPass(Account_DTO account_DTO){
-        
+        String pass ="";
         try{
             connection = DAL.ConnectionDB_DAL.OpenConnection();
             String query ="select cPassword from Users where Usrname='"+account_DTO.getID()+"'";
             stm = connection.createStatement();
             set = stm.executeQuery(query);
-            String pass ="";
+            
             if(set.next()){
                 pass = set.getString(1);
             }
-            if(account_DTO.getPass() == pass){
-                    return false;
-            }
+            
         } catch  (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return true;
+        if(account_DTO.getPass().equals(pass)){
+                    return true;
+        }else{
+            return false;    
+        }
+        
     }
 }

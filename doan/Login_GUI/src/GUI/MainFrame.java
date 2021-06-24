@@ -1265,6 +1265,20 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void btnFind_KHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_KHMouseClicked
         // TODO add your handling code here:
+      DefaultTableModel model = (DefaultTableModel) KH_Table.getModel();
+      model.setRowCount(0);
+      Object[] row = new Object[5];
+      for (Customer_DTO cus_dto : list_cus){
+          if(cus_dto.checkContain(Customer_Search.getText())){
+            row[0] = cus_dto.getCustomer_id();
+            row[1] = cus_dto.getFullname();
+            row[2] = cus_dto.getCccd();
+            row[3] = cus_dto.getPhoneNumber();
+            row[4] = cus_dto.getDateOfBird();
+            model1.addRow(row);
+          };
+      }
+        
     }//GEN-LAST:event_btnFind_KHMouseClicked
 
     private void btnFind_KHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_KHMouseEntered
@@ -1798,7 +1812,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     DefaultTableModel model1;
     public void GetDataFromCusTable() {       
-        List<Customer_DTO> list_cus = new ArrayList<>();
+        
         model1 = (DefaultTableModel)KH_Table.getModel();
         list_cus = cus_bus.Select("SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client");
         Object[] row= new Object[5];
@@ -1822,6 +1836,8 @@ public class MainFrame extends javax.swing.JFrame {
     Customer_BUS cus_bus = new Customer_BUS();
     Login_GUI login_GUI = new Login_GUI();
     Account_BUS account_BUS = new Account_BUS();
+    
+    List<Customer_DTO> list_cus = new ArrayList<>();
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adr_NV_TextField;
