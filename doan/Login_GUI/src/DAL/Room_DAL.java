@@ -22,25 +22,19 @@ import javax.swing.JOptionPane;
 public class Room_DAL {
     public Room_DAL(){};
     public  boolean Update(Room_DTO room) {  
+        
            String sql;        
           try {
-<<<<<<< HEAD
-=======
-            String sql;
->>>>>>> 1d3e4f94e21e6aae6b4309c118cc9ec330044013
-            if (room.getEmployeeId()==null && room.getTypeOfRoom()==null && room.getStatus()==null){
-                Object arg[]= {room.getBookingId(),room.getRoomId()};
-          
-            sql = String.format("UPDATE Room SET  BookingID='%s' WHERE RoomId  = '%s'", arg);
+            if (room.getEmployeeId()==null && room.getTypeOfRoom()==null){
+                Object arg[]= {room.getStatus(),room.getBookingId(),room.getRoomId()};
+          System.out.println("BookingId la: " + room.getBookingId());
+            sql = String.format("UPDATE Room SET cStatus='%s', BookingID='%s' WHERE RoomId  = '%s'", arg);
             }else{
             
             Object arg[]= {room.getRoomId(),room.getStatus(),room.getTypeOfRoom()};
             sql = String.format("UPDATE Room SET TypeOfRoom='%s', cStatus='%s' WHERE RoomID  = '%s'", arg);
-<<<<<<< HEAD
-           }
-=======
-            }
->>>>>>> 1d3e4f94e21e6aae6b4309c118cc9ec330044013
+
+           }           
             
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
