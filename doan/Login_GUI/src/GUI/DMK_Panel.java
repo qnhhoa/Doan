@@ -18,8 +18,7 @@ public class DMK_Panel extends javax.swing.JFrame {
     /**
      * Creates new form DMK_Panel
      */
-    public Account_BUS account_BUS = new Account_BUS();
-    public Account_DTO account_DTO = new Account_DTO();
+
     //public String pass;
     
     
@@ -103,6 +102,11 @@ public class DMK_Panel extends javax.swing.JFrame {
         btnMDK.setFont(new java.awt.Font("UTM Avo", 1, 14)); // NOI18N
         btnMDK.setText("CHANGE PASSWORD");
         btnMDK.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        btnMDK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMDKMouseClicked(evt);
+            }
+        });
         btnMDK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMDKActionPerformed(evt);
@@ -126,7 +130,7 @@ public class DMK_Panel extends javax.swing.JFrame {
             MatKhauCu_TextField.setText(".............");
             
         }else {
-            Login_GUI login_GUI = new Login_GUI();
+           
             
             this.account_DTO.setID(login_GUI.ID);
             this.account_DTO.setPass(MatKhauCu_TextField.getText());
@@ -152,7 +156,7 @@ public class DMK_Panel extends javax.swing.JFrame {
     }//GEN-LAST:event_MatKhauMoiReW_TextFieldFocusLost
 
     private void btnMDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMDKActionPerformed
-            
+        
            
     }//GEN-LAST:event_btnMDKActionPerformed
 
@@ -167,6 +171,13 @@ public class DMK_Panel extends javax.swing.JFrame {
             MatKhauMoi_TextField.setText(".............");
         }
     }//GEN-LAST:event_MatKhauMoi_TextFieldFocusLost
+
+    private void btnMDKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMDKMouseClicked
+        // TODO add your handling code here:
+        if (MatKhauMoi_TextField.getText().equals(MatKhauMoiReW_TextField.getText())){
+            account_BUS.ChangePass(new Account_DTO(login_GUI.ID,MatKhauMoi_TextField.getText()));
+        }
+    }//GEN-LAST:event_btnMDKMouseClicked
 
     /**
      * @param args the command line arguments
@@ -202,7 +213,9 @@ public class DMK_Panel extends javax.swing.JFrame {
             }
         });
     }
-
+    Account_BUS account_BUS = new Account_BUS();
+    Account_DTO account_DTO = new Account_DTO();
+    Login_GUI login_GUI = new Login_GUI();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DMK_Panel;
     private javax.swing.JPasswordField MatKhauCu_TextField;

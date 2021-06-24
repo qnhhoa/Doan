@@ -7,6 +7,7 @@ package BUS;
 
 import DAL.Account_DAL;
 import DTO.Account_DTO;
+import java.util.List;
 
 /**
  *
@@ -18,10 +19,12 @@ public class Account_BUS {
     public boolean Login (Account_DTO account_DTO){
         return account_DAL.Login(account_DTO);
      };
+    public boolean ChangePass(Account_DTO acc_DTO){
+        return account_DAL.ChangePass(acc_DTO);
+    }
     
-    
-    public void getINFO (Account_DTO account_DTO){
-        account_DAL.getINFO(account_DTO);
+    public List getINFO (Account_DTO account_DTO){
+       return account_DAL.getINFO(account_DTO);
     }
     
     public boolean checkPass (Account_DTO account_DTO){

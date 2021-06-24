@@ -41,17 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
         NV_Table.getTableHeader().setFont(new Font("UTM Avo", Font.BOLD, 12));
         LSDP_Table.getTableHeader().setFont(new Font("UTM Avo", Font.BOLD, 12));
         
-        Login_GUI login_GUI = new Login_GUI();
-        Account_BUS account_BUS = new Account_BUS();
-        ID_Text.setText(login_GUI.ID);
-        Staff_Text.setText(login_GUI.ID);
-        Account_DTO account_DTO = new Account_DTO();
-        account_DTO.setID(login_GUI.ID);
-        account_BUS.getINFO(account_DTO);
-        Name_Text.setText(account_DTO.getfullname());
-        SDT_Text.setText(account_DTO.getsdt());
-        
-        
+        Staff_Text.setText(login_GUI.ID);  
         GetDataFromDTBToRoomTable();
         GetDataFromDTBToStaffTable();
         GetDataFromLSPTable();
@@ -1141,7 +1131,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLSDPMouseExited
 
     private void btnINFOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnINFOMouseClicked
+        List<Object[]> list_obj = account_BUS.getINFO(new Account_DTO(Staff_Text.getText(),null));
         TabPanel.setSelectedComponent(Info_Panel);
+        ID_Text.setText(Staff_Text.getText());
+        Name_Text.setText(list_obj.get(0)[0].toString());
+        SDT_Text.setText(list_obj.get(0)[1].toString());
+        
+        
     }//GEN-LAST:event_btnINFOMouseClicked
 
     private void btnINFOMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnINFOMouseEntered
@@ -1824,7 +1820,9 @@ public class MainFrame extends javax.swing.JFrame {
     Booking_BUS bk_bus = new Booking_BUS();
     LSP_BUS lsp_bus = new LSP_BUS();
     Customer_BUS cus_bus = new Customer_BUS();
-
+    Login_GUI login_GUI = new Login_GUI();
+    Account_BUS account_BUS = new Account_BUS();
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Adr_NV_TextField;
     private javax.swing.JLabel BackGr;
