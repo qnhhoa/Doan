@@ -136,9 +136,10 @@ public class DMK_Panel extends javax.swing.JFrame {
             this.account_DTO.setPass(MatKhauCu_TextField.getText());
             
             if(this.account_BUS.checkPass(this.account_DTO)) {
-                MatKhauCu_TextField.setText("");
-                JOptionPane.showMessageDialog(this, "Your old password was wrong.");
+                MatKhauCu_TextField.setText("");                
                 MatKhauCu_TextField.requestFocus();
+            }  else {          
+            JOptionPane.showMessageDialog(this, "Your old password was wrong.");
             }
         }
     }//GEN-LAST:event_MatKhauCu_TextFieldFocusLost

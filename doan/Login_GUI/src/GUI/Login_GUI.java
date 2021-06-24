@@ -185,7 +185,7 @@ public class Login_GUI extends javax.swing.JFrame {
         
         String ID = IDTextField.getText();
         String Pass = PasswordField.getText();
-        Account_DTO login_DTO = new Account_DTO(ID,"12345678");
+        Account_DTO login_DTO = new Account_DTO(ID,Pass);
         this.ID=ID;
         
         try {
