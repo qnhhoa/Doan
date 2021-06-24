@@ -14,8 +14,6 @@ public class Account_DTO {
     String ID;
     String Pass;
     char flag;
-    String fullname;
-    String sdt;
     
     public Account_DTO (){
     }
@@ -49,19 +47,5 @@ public class Account_DTO {
         this.flag = flag;
     }
     
-    public String getfullname() {
-        return fullname;
-    }
-    
-    public void setfullname(String fullname) {
-        this.fullname = fullname;
-    }
-    
-    public String getsdt() {
-        return sdt;
-    }
-    
-    public void setsdt(String sdt) {
-        this.sdt = sdt;
-    }
+
 }

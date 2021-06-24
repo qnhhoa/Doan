@@ -7,6 +7,8 @@ package DAL;
 import DTO.Account_DTO;
 import GUI.MainFrame;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.PasswordView;
 //import DAL.ConnectionDB_DAL;
@@ -36,24 +38,45 @@ public class Account_DAL {
         return false;
     }
     
-    public void getINFO(Account_DTO account_DTO) {
+    public List getINFO(Account_DTO account_DTO) {
+        List<Object[]> list_obj = new ArrayList<>();
         try{
+           
             connection = DAL.ConnectionDB_DAL.OpenConnection();
-            String query ="select * from Staff where StaffID='"+account_DTO.getID()+"'";
+            String query ="select FullName,PhoneNumber from Staff where StaffID='"+account_DTO.getID()+"'";
             stm = connection.createStatement();
             set = stm.executeQuery(query);
+            Object[] obj;
             if(set.next()){
-                String fullname = set.getString(3);
-                account_DTO.setfullname(fullname);
-                
-                String sdt = set.getString(6);
-                account_DTO.setsdt(sdt);
+                obj = new Object[2];
+                obj[0]=set.getString("FullName");
+                obj[1]=set.getString("PhoneNumber");
+                list_obj.add(obj);
             }
             
         } catch  (Exception e) {
+            e.printStackTrace();
         }
+        return list_obj;
     }
-    
+    public boolean ChangePass(Account_DTO account_DTO){
+        try {
+            Object arg[]= {account_DTO.getPass(),account_DTO.getID()};
+            String sql;
+            sql = String.format("UPDATE Users SET cPassword='%s' WHERE Usrname  = '%s'", arg);
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
+            int rows = statement.executeUpdate(sql);
+            if (rows > 0){
+                System.out.println("Update successfull");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+
+    }
     public boolean checkPass(Account_DTO account_DTO){
         
         try{
