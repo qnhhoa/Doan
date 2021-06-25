@@ -1181,16 +1181,19 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnFind_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_PMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) LSDP_Table.getModel();
+        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
         model.setRowCount(0);
         Object[] row= new Object[7];
         
         for(Room_DTO room : list_room){
+            row = new Object[7];
             if(room.checkContain(Room_Search.getText())){
-            row= new Object[7];
+                System.out.println("IF ");
+            
             row[0]=room.getRoomId();
             row[1]=room.getTypeOfRoom();
             row[2]=room.getStatus();
+             
             if (room.getStatus().equals("Booked") || room.getStatus().equals("Check In")){
                 
                 String sql = String.format("select * from Room, Booking Where Booking.BookingId = Room.BookingId AND Room.RoomID='%s'", room.getRoomId());
@@ -1198,13 +1201,14 @@ public class MainFrame extends javax.swing.JFrame {
                 list_obj = room_bus.SelectDataJoinBooking(sql);
                            //     System.out.println(sql);
 
-               // System.out.println(list_obj.size());
+                //System.out.println(list_obj.size());
                 if (list_obj.size()>0){
+                    
                     try {
                         Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
                         Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
-                        if (new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),room.getRoomId()
-                                        ,checkInDate,checkOutDate).checkContain(Room_Search.getText())){
+                        Booking_DTO booking_dto = new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),null
+                                        ,checkInDate,checkOutDate);
                             row[3]=list_obj.get(0)[4].toString();
                             row[4]=list_obj.get(0)[5].toString();
 
@@ -1225,17 +1229,68 @@ public class MainFrame extends javax.swing.JFrame {
                                 row[6]=list_obj.get(0)[7].toString();
                             }
                         
-                    }
+                    
                     } catch (ParseException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
+                
+            } 
+            model.addRow(row);
+            }
+            else{
+                if (room.getStatus().equals("Booked") || room.getStatus().equals("Check In")){
+                
+                String sql = String.format("select * from Room, Booking Where Booking.BookingId = Room.BookingId AND Room.RoomID='%s'", room.getRoomId());
+                list_obj = new ArrayList<>();
+                list_obj = room_bus.SelectDataJoinBooking(sql);
+
+                if (list_obj.size()>0){
+
+                    try {
+                       Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
+                        Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+                        Booking_DTO booking_dto = new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),null
+                                        ,checkInDate,checkOutDate);
+                        
+                        boolean checkContain = booking_dto.checkContain(Room_Search.getText()) ;
+
+                        if (checkContain){
+                            row[0]=room.getRoomId();
+                            row[1]=room.getTypeOfRoom();
+                            row[2]=room.getStatus();
+                            row[3]=list_obj.get(0)[4].toString();
+                            row[4]=list_obj.get(0)[5].toString();
+
+                            /// check in date and out date is null
+                            if (list_obj.get(0)[6]==null && list_obj.get(0)[7]==null){
+                                row[5]=null;
+                                row[6]=null;
+
+                            } else if(list_obj.get(0)[7]==null){
+                                row[5]=list_obj.get(0)[6].toString();
+                                row[6]=null;
+
+                            } else if (list_obj.get(0)[6]==null){
+                                row[5]=null;
+                                row[6]=list_obj.get(0)[7].toString();
+                            }else{
+                                row[5]=list_obj.get(0)[6].toString();
+                                row[6]=list_obj.get(0)[7].toString();
+                            }
+                        model.addRow(row);
+                    }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                
+            } 
+                
             }
             
-          
-            model.addRow(row); 
-            }
             
         }
         
@@ -1339,7 +1394,7 @@ public class MainFrame extends javax.swing.JFrame {
             row[2] = cus_dto.getCccd();
             row[3] = cus_dto.getPhoneNumber();
             row[4] = cus_dto.getDateOfBird();
-            model1.addRow(row);
+            model.addRow(row);
           };
       }
         
@@ -1658,6 +1713,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void NV_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NV_TableMouseClicked
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)NV_Table.getModel();
         int i = NV_Table.getSelectedRow();
 //        Employee_DTO em = list.get(i);
         StaffID_TextField.setText(model.getValueAt(i,0).toString());
@@ -1685,6 +1741,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void KH_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_KH_TableMouseClicked
         // TODO add your handling code here:
+        DefaultTableModel model1;
+        model1 = (DefaultTableModel)KH_Table.getModel();
         int i = KH_Table.getSelectedRow();
         CusID_TextField.setText(model1.getValueAt(i,0).toString());
         Name_KH_TextField.setText(model1.getValueAt(i,1).toString());
@@ -1869,9 +1927,9 @@ public class MainFrame extends javax.swing.JFrame {
         
 
     }
-    DefaultTableModel model;
+    
     public void GetDataFromDTBToStaffTable(){
-        
+        DefaultTableModel model;
         model = (DefaultTableModel)NV_Table.getModel();
         list_em = em_BUS.SelectData("SELECT StaffID, FullName, Gender, cAddress, PhoneNumber, DateofBirth, Position From Staff");
         Object[] row= new Object[7];
@@ -1907,9 +1965,9 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
-    DefaultTableModel model1;
+    
     public void GetDataFromCusTable() {       
-        
+        DefaultTableModel model1;
         model1 = (DefaultTableModel)KH_Table.getModel();
         list_cus = cus_bus.Select("SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client");
         Object[] row= new Object[5];

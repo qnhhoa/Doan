@@ -68,11 +68,10 @@ public class Booking_DTO {
         this.checkOutDate = checkOutDate;
     }
     public boolean checkContain(String str){
-
+        System.out.println("co vo");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         if(bookId.toUpperCase().contains(str.toUpperCase())==true ||
            customerId.toUpperCase().contains(str.toUpperCase())==true ||
-           roomId.toUpperCase().contains(str.toUpperCase())==true ||
            df.format(checkInDate).toUpperCase().contains(str.toUpperCase())==true ||
            df.format(checkOutDate).toUpperCase().contains(str.toUpperCase())==true ){
             return true;

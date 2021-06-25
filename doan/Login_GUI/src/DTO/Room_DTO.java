@@ -73,9 +73,8 @@ public class Room_DTO {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         if(roomId.toUpperCase().contains(str.toUpperCase())==true ||
            typeOfRoom.toUpperCase().contains(str.toUpperCase())==true ||
-           status.toUpperCase().contains(str.toUpperCase())==true ||
-           employeeId.toUpperCase().contains(str.toUpperCase())==true ||
-           bookingId.toUpperCase().contains(str.toUpperCase())==true)   {
+           status.toUpperCase().contains(str.toUpperCase())==true
+          ){
             return true;
         }else{
             return false;
