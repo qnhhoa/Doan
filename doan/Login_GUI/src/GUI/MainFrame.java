@@ -1016,6 +1016,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/pic/search-icon.png"))); // NOI18N
         btnFind.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        btnFind.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFindMouseClicked(evt);
+            }
+        });
         LSDP_Panel.add(btnFind, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 30, 30));
 
         jLabel22.setFont(new java.awt.Font("UTM Avo", 1, 24)); // NOI18N
@@ -1176,6 +1181,65 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnFind_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_PMouseClicked
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) LSDP_Table.getModel();
+        model.setRowCount(0);
+        Object[] row= new Object[7];
+        
+        for(Room_DTO room : list_room){
+            if(room.checkContain(Room_Search.getText())){
+            row= new Object[7];
+            row[0]=room.getRoomId();
+            row[1]=room.getTypeOfRoom();
+            row[2]=room.getStatus();
+            if (room.getStatus().equals("Booked") || room.getStatus().equals("Check In")){
+                
+                String sql = String.format("select * from Room, Booking Where Booking.BookingId = Room.BookingId AND Room.RoomID='%s'", room.getRoomId());
+                list_obj = new ArrayList<>();
+                list_obj = room_bus.SelectDataJoinBooking(sql);
+                           //     System.out.println(sql);
+
+               // System.out.println(list_obj.size());
+                if (list_obj.size()>0){
+                    try {
+                        Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
+                        Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+                        if (new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),room.getRoomId()
+                                        ,checkInDate,checkOutDate).checkContain(Room_Search.getText())){
+                            row[3]=list_obj.get(0)[4].toString();
+                            row[4]=list_obj.get(0)[5].toString();
+
+                            /// check in date and out date is null
+                            if (list_obj.get(0)[6]==null && list_obj.get(0)[7]==null){
+                                row[5]=null;
+                                row[6]=null;
+
+                            } else if(list_obj.get(0)[7]==null){
+                                row[5]=list_obj.get(0)[6].toString();
+                                row[6]=null;
+
+                            } else if (list_obj.get(0)[6]==null){
+                                row[5]=null;
+                                row[6]=list_obj.get(0)[7].toString();
+                            }else{
+                                row[5]=list_obj.get(0)[6].toString();
+                                row[6]=list_obj.get(0)[7].toString();
+                            }
+                        
+                    }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+            }
+            
+          
+            model.addRow(row); 
+            }
+            
+        }
+        
+        
     }//GEN-LAST:event_btnFind_PMouseClicked
 
     private void btnUpdate_PMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_PMouseEntered
@@ -1341,6 +1405,22 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void btnFind_NVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_NVMouseClicked
         // TODO add your handling code here:
+      DefaultTableModel model = (DefaultTableModel) NV_Table.getModel();
+      model.setRowCount(0);
+      Object[] row= new Object[7];
+      for (Employee_DTO em : list_em){
+          if(em.checkContain(Employee_Search.getText())){
+            row[0]=em.getStaffId();
+            row[1]=em.getFullName();
+            row[2]=em.getGender();
+            row[5]=em.getDateOfBird();
+            row[4]=em.getPhoneNumber();
+            row[3]=em.getAddress();
+            row[6]=em.getDepartment();
+            model.addRow(row);  
+          };
+      }
+        
     }//GEN-LAST:event_btnFind_NVMouseClicked
 
     private void btnFind_NVMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFind_NVMouseEntered
@@ -1677,6 +1757,23 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_LSDP_SearchFocusLost
 
+    private void btnFindMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFindMouseClicked
+        // TODO add your handling code here:
+      DefaultTableModel model = (DefaultTableModel) LSDP_Table.getModel();
+      model.setRowCount(0);
+      Object[] row = new Object[5];
+      for (LSP_DTO lsp : list_lsp){
+          if(lsp.checkContain(LSDP_Search.getText())){
+            row[0] = lsp.getRoomId();
+            row[1] = lsp.getCusId();
+            row[2] = lsp.getStaffId();
+            row[3] = lsp.getCheckInDate();
+            row[4] = lsp.getCheckOutDate();
+            model.addRow(row);
+          };
+      }
+    }//GEN-LAST:event_btnFindMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1713,8 +1810,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     
   public void GetDataFromDTBToRoomTable(){
-        List<Room_DTO> list_room = new ArrayList<>();
-        List<Object[]> list_obj;
+        
+        
         DefaultTableModel model= (DefaultTableModel)Phong_Table.getModel();
         
         list_room = room_bus.SelectData("select * from Room");
@@ -1774,7 +1871,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     DefaultTableModel model;
     public void GetDataFromDTBToStaffTable(){
-        List<Employee_DTO> list_em = new ArrayList<>();
+        
         model = (DefaultTableModel)NV_Table.getModel();
         list_em = em_BUS.SelectData("SELECT StaffID, FullName, Gender, cAddress, PhoneNumber, DateofBirth, Position From Staff");
         Object[] row= new Object[7];
@@ -1795,7 +1892,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public void GetDataFromLSPTable() {       
-        List<LSP_DTO> list_lsp = new ArrayList<>();
+        
         DefaultTableModel model= (DefaultTableModel)LSDP_Table.getModel();
         list_lsp = lsp_bus.SelectData("Select Booking.RoomID, ClientID, StaffID,CheckInDate, CheckOutDate From Booking, Room where Booking.RoomID = Room.RoomID");
         Object[] row= new Object[5];
@@ -1807,7 +1904,7 @@ public class MainFrame extends javax.swing.JFrame {
             row[4] = lsp.getCheckOutDate();
             model.addRow(row);
         });
-        ;
+        
     }
     
     DefaultTableModel model1;
@@ -1837,6 +1934,10 @@ public class MainFrame extends javax.swing.JFrame {
     Login_GUI login_GUI = new Login_GUI();
     Account_BUS account_BUS = new Account_BUS();
     
+    List<Object[]> list_obj;
+    List<Employee_DTO> list_em = new ArrayList<>();
+    List<LSP_DTO> list_lsp = new ArrayList<>();
+    List<Room_DTO> list_room = new ArrayList<>();
     List<Customer_DTO> list_cus = new ArrayList<>();
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
