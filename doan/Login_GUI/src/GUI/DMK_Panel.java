@@ -157,8 +157,13 @@ public class DMK_Panel extends javax.swing.JFrame {
     }//GEN-LAST:event_MatKhauMoiReW_TextFieldFocusLost
 
     private void btnMDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMDKActionPerformed
-        
-           
+        String pass = String.valueOf(MatKhauMoi_TextField.getPassword());
+        String confirm = String.valueOf(MatKhauMoiReW_TextField.getPassword());
+        if (!pass.equals(confirm)) {
+            JOptionPane.showMessageDialog(this, "The Password and confirmation Password do not match!");
+            MatKhauMoi_TextField.setText("");
+            MatKhauMoiReW_TextField.setText("");
+        }          
     }//GEN-LAST:event_btnMDKActionPerformed
 
     private void MatKhauMoi_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MatKhauMoi_TextFieldFocusGained
@@ -177,6 +182,7 @@ public class DMK_Panel extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (MatKhauMoi_TextField.getText().equals(MatKhauMoiReW_TextField.getText())){
             account_BUS.ChangePass(new Account_DTO(login_GUI.ID,MatKhauMoi_TextField.getText()));
+            JOptionPane.showMessageDialog(this,"Your password has been changed!");
         }
     }//GEN-LAST:event_btnMDKMouseClicked
 
