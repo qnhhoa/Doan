@@ -59,7 +59,6 @@ ALTER TABLE Booking ADD CONSTRAINT chk_bk CHECK (CheckInDate >= CheckOutDate);
 ALTER TABLE USERS ADD CONSTRAINT ck_au CHECK (authority='1' or authority='0')
 
 ----- SET DATEFORMAT DMY
-DROP TABLE Staff
 
 INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('NGUYEN NHU NHUT', 'Nu','80 Nguyen Thai Binh, Q1, TPHCM','0927345678',13-04-2001,'Room Attendent')
 INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('LE THI PHI YEN','Nu','333 Nguyen Hue, Q1, TPHCM','0987567390',21-04-2000,'Room Attendent')
