@@ -30,10 +30,10 @@ public class Booking_DAL {
              if (booking.getCheckInDate()==null && booking.getCheckOutDate()==null){
                   Object [] arg= {booking.getRoomId(),booking.getCustomerId(),"",""};
                  
-                  SQL = String.format("INSERT INTO Booking(RoomId,ClientID,CheckInDate,CheckOutDate) VALUES ('%s','%s','%s','%s')",arg);
+                  SQL = String.format("INSERT INTO Booking(RoomId,ClientID) VALUES ('%s','%s')",arg);
              }else{
                  Object [] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckInDate()),""};
-                 SQL = String.format("INSERT INTO Booking(RoomId,ClientID,CheckInDate,CheckOutDate) VALUES ('%s','%s','%s','%s')",arg);
+                 SQL = String.format("INSERT INTO Booking(RoomId,ClientID) VALUES ('%s','%s')",arg);
              }
 
 

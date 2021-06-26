@@ -27,12 +27,12 @@ public class Room_DAL {
           try {
             if (room.getEmployeeId()==null && room.getTypeOfRoom()==null){
                 Object arg[]= {room.getStatus(),room.getBookingId(),room.getRoomId()};
-          System.out.println("BookingId la: " + room.getBookingId());
-            sql = String.format("UPDATE Room SET cStatus='%s', BookingID='%s' WHERE RoomId  = '%s'", arg);
+          
+            sql = String.format("UPDATE Room SET cStatus='%s', BookingID='%s' WHERE RoomID  = '%s'", arg);
             }else{
             
-            Object arg[]= {room.getRoomId(),room.getStatus(),room.getTypeOfRoom()};
-            sql = String.format("UPDATE Room SET TypeOfRoom='%s', cStatus='%s' WHERE RoomID  = '%s'", arg);
+            Object arg[]= {room.getTypeOfRoom(),room.getStatus(),room.getRoomId()};
+            sql = String.format("UPDATE Room SET TypeofRoom='%s', cStatus='%s' WHERE RoomID  = '%s'", arg);
 
            }           
             
