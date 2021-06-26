@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -191,6 +192,8 @@ public class Booking_Panel extends javax.swing.JFrame {
            CCCD_KH_TextField.setText(null);
            Phone_KH_TextField.setText(null);
            DOBirth_Chooser.setDate(null);
+           JOptionPane.showMessageDialog(this, "Book successfull");
+           this.setVisible(false);
        };
        
     }//GEN-LAST:event_btnBookMouseClicked

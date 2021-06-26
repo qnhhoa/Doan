@@ -136,10 +136,11 @@ public class DMK_Panel extends javax.swing.JFrame {
             this.account_DTO.setPass(MatKhauCu_TextField.getText());
             
             if(this.account_BUS.checkPass(this.account_DTO)) {
+                
+            }  else {          
                 MatKhauCu_TextField.setText("");                
                 MatKhauCu_TextField.requestFocus();
-            }  else {          
-            JOptionPane.showMessageDialog(this, "Your old password was wrong.");
+                JOptionPane.showMessageDialog(this, "Your old password was wrong.");
             }
         }
     }//GEN-LAST:event_MatKhauCu_TextFieldFocusLost
@@ -183,6 +184,7 @@ public class DMK_Panel extends javax.swing.JFrame {
         if (MatKhauMoi_TextField.getText().equals(MatKhauMoiReW_TextField.getText())){
             account_BUS.ChangePass(new Account_DTO(login_GUI.ID,MatKhauMoi_TextField.getText()));
             JOptionPane.showMessageDialog(this,"Your password has been changed!");
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnMDKMouseClicked
 
