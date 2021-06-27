@@ -79,14 +79,14 @@ public class Booking_DAL {
             String sql;
             if (booking.getCheckInDate()==null && booking.getCheckOutDate()==null){
                 Object[] arg= {booking.getRoomId(),booking.getCustomerId(),booking.getBookId()};
-                sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s'WHERE bookingId  = '%s'", arg);
+                sql = String.format("UPDATE Booking SET RoomID='%s', ClientID='%s'WHERE BookingID  = '%s'", arg);
                 
             }else if (booking.getCheckOutDate()==null){
                 Object[] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckInDate()),booking.getBookId()};
-                sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s', CheckInDate='%s' WHERE bookingId  = '%s'", arg);
+                sql = String.format("UPDATE Booking SET RoomID='%s', ClientID='%s', CheckInDate='%s' WHERE BookingID  = '%s'", arg);
             }else {
                 Object[] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckOutDate()),booking.getBookId()};
-                sql = String.format("UPDATE Booking SET RoomId='%s', ClientID='%s', CheckOutDate='%s' WHERE bookingId  = '%s'", arg);
+                sql = String.format("UPDATE Booking SET RoomID='%s', ClientID='%s', CheckOutDate='%s' WHERE BookingID  = '%s'", arg);
             }
             
             System.out.println(sql);

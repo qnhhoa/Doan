@@ -1367,6 +1367,7 @@ public class MainFrame extends javax.swing.JFrame {
        System.out.println("Date "+date);
        
        bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),null,date));
+       //cus_bus.Update(new Customer_DTO(CustomerID_TextField.getText(),null,null,null,date));
        room_bus.Update(new Room_DTO(ID_Text.getText(),TypeRoomComboBox.getSelectedItem().toString(),"Available",null,null));
        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
        model.setRowCount(0);
