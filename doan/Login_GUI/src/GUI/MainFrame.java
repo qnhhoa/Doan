@@ -1308,8 +1308,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnUpdate_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdate_PMouseClicked
         // TODO add your handling code here:
         if(room_bus.Update(new Room_DTO(ID_TextField.getText(),TypeRoomComboBox.getSelectedItem().toString()
-                          ,StatusComboBox.getSelectedItem().toString(),"", ""))){
+                          ,StatusComboBox.getSelectedItem().toString(),"", BookID_TextField.getText()))){
             JOptionPane.showMessageDialog(null,"Update Room Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromDTBToRoomTable();
         };
     }//GEN-LAST:event_btnUpdate_PMouseClicked
 
@@ -1322,15 +1323,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCheckIn_PMouseExited
 
     private void btnCheckIn_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckIn_PMouseClicked
-        // TODO add your handling code here:
-         System.out.println(varContainBookingID);
-      
-       Date date = Calendar.getInstance().getTime();  
-       System.out.println("Date "+date);
-       
+        // TODO add your handling code here:      
+       Date date = Calendar.getInstance().getTime();         
        bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),date,null));
        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
-       model.setRowCount(0);
        GetDataFromDTBToRoomTable();
        
     }//GEN-LAST:event_btnCheckIn_PMouseClicked
@@ -1371,6 +1367,7 @@ public class MainFrame extends javax.swing.JFrame {
        System.out.println("Date "+date);
        
        bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),null,date));
+       room_bus.Update(new Room_DTO(ID_Text.getText(),TypeRoomComboBox.getSelectedItem().toString(),"Available",null,null));
        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
        model.setRowCount(0);
        GetDataFromDTBToRoomTable();
@@ -1414,6 +1411,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(cus_bus.Insert(new Customer_DTO("",Name_KH_TextField.getText(),CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),
                        DOBirth_Chooser_KH.getDate()))){
             JOptionPane.showMessageDialog(null,"Insert Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromCusTable();
         };
     }//GEN-LAST:event_btnAdd_KHMouseClicked
 
@@ -1430,6 +1428,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(cus_bus.Update(new Customer_DTO(CusID_TextField.getText(),Name_KH_TextField.getText()
                           ,CCCD_KH_TextField.getText(),Phone_KH_TextField.getText(),DOBirth_Chooser_KH.getDate()))){
             JOptionPane.showMessageDialog(null,"Update Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromCusTable();
         };
     }//GEN-LAST:event_btnUpdate_KHMouseClicked
 
@@ -1445,6 +1444,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(cus_bus.Delete(new Customer_DTO(CusID_TextField.getText(),null,null,null,null))){
             JOptionPane.showMessageDialog(null,"Delete Client Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromCusTable();
         }
     }//GEN-LAST:event_btnDelete_KHMouseClicked
 
@@ -1491,6 +1491,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(em_BUS.Insert(new Employee_DTO("",Name_NV_TextField.getText(),Gender_NV_TextField.getText(),Adr_NV_TextField.getText(),Phone_NV_TextField.getText(),
                        DOBirth_Chooser_NV.getDate(),DePart_NV_TextField.getSelectedItem().toString()))){
             JOptionPane.showMessageDialog(null,"Insert Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromDTBToStaffTable();
         };
     }//GEN-LAST:event_btnAdd_NVMouseClicked
 
@@ -1507,6 +1508,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(em_BUS.Update(new Employee_DTO(StaffID_TextField.getText(),Name_NV_TextField.getText(),Gender_NV_TextField.getText(),Adr_NV_TextField.getText(),Phone_NV_TextField.getText(),
                        DOBirth_Chooser_NV.getDate(),DePart_NV_TextField.getSelectedItem().toString()))){
             JOptionPane.showMessageDialog(null,"Update Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromDTBToStaffTable();
         };
     }//GEN-LAST:event_btnUpdate_NVMouseClicked
 
@@ -1522,6 +1524,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(em_BUS.Delete(new Employee_DTO(StaffID_TextField.getText(),null,null,null,null,null,null))){
             JOptionPane.showMessageDialog(null,"Delete Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
+            GetDataFromDTBToStaffTable();
         }
     }//GEN-LAST:event_btnDelete_NVMouseClicked
 
@@ -1871,7 +1874,7 @@ public class MainFrame extends javax.swing.JFrame {
         
         
         DefaultTableModel model= (DefaultTableModel)Phong_Table.getModel();
-        
+        model.setRowCount(0);
         list_room = room_bus.SelectData("select * from Room");
         Object[] row= new Object[7];
         
@@ -1931,6 +1934,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void GetDataFromDTBToStaffTable(){
         DefaultTableModel model;
         model = (DefaultTableModel)NV_Table.getModel();
+        model.setRowCount(0);
         list_em = em_BUS.SelectData("SELECT StaffID, FullName, Gender, cAddress, PhoneNumber, DateofBirth, Position From Staff");
         Object[] row= new Object[7];
         list_em.forEach((Employee_DTO em) -> {
@@ -1952,6 +1956,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void GetDataFromLSPTable() {       
         
         DefaultTableModel model= (DefaultTableModel)LSDP_Table.getModel();
+        model.setRowCount(0);
         list_lsp = lsp_bus.SelectData("Select Booking.RoomID, ClientID, StaffID,CheckInDate, CheckOutDate From Booking, Room where Booking.RoomID = Room.RoomID");
         Object[] row= new Object[5];
         list_lsp.forEach((LSP_DTO lsp) -> {
@@ -1969,6 +1974,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void GetDataFromCusTable() {       
         DefaultTableModel model1;
         model1 = (DefaultTableModel)KH_Table.getModel();
+        model1.setRowCount(0);
         list_cus = cus_bus.Select("SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client");
         Object[] row= new Object[5];
         list_cus.forEach((Customer_DTO cus) -> {

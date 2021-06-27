@@ -193,6 +193,7 @@ public class Booking_Panel extends javax.swing.JFrame {
            Phone_KH_TextField.setText(null);
            DOBirth_Chooser.setDate(null);
            JOptionPane.showMessageDialog(this, "Book successfull");
+           new MainFrame().GetDataFromDTBToRoomTable();
            this.setVisible(false);
        };
        

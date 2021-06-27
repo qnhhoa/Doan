@@ -31,8 +31,8 @@ public class Room_DAL {
             sql = String.format("UPDATE Room SET cStatus='%s', BookingID='%s' WHERE RoomID  = '%s'", arg);
             }else{
             
-            Object arg[]= {room.getTypeOfRoom(),room.getStatus(),room.getRoomId()};
-            sql = String.format("UPDATE Room SET TypeofRoom='%s', cStatus='%s' WHERE RoomID  = '%s'", arg);
+            Object arg[]= {room.getTypeOfRoom(),room.getStatus(),room.getBookingId(),room.getRoomId()};
+            sql = String.format("UPDATE Room SET TypeofRoom='%s', cStatus='%s', BookingID='%s' WHERE RoomID  = '%s'", arg);
 
            }           
             
