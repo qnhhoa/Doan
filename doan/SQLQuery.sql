@@ -21,7 +21,6 @@ StaffID varchar(7),
 BookingID varchar(7)
 )
 
-ALTER TABLE Room ADD BookingID varchar(7)
 
 CREATE TABLE Client (
 indx INT identity(1,1),
@@ -31,43 +30,38 @@ PhoneNumber varchar(20) UNIQUE,
 DateofBirth datetime,
 CCCD varchar(20) UNIQUE
 )
-SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client
+
 
 CREATE TABLE Booking (
 indx INT identity(1,1),
 BookingID AS 'BK' + RIGHT(CONVERT(VARCHAR(5), indx), 5) PERSISTED PRIMARY KEY,
 RoomID varchar(5),
 ClientID varchar(7),
-CheckInDate datetime,
-CheckOutDate datetime
+CheckInDate date,
+CheckOutDate date
 )
-Alter table Booking alter column CheckOutDate date
 
-Select Booking.RoomID, ClientID,CheckInDate, CheckOutDate From Booking, Room where Booking.RoomID = Room.RoomID
 
 CREATE TABLE Users (
 Usrname varchar(7),
 cPassword varchar(10),
 authority char(1)
 )
-select * from Users
-SELECT * FROM Booking;
-select * from room;
-update Room set StaffID=null where RoomID='P003'
+
+------------------------
 
 ALTER TABLE Room ADD CONSTRAINT st_room_fk foreign key(StaffID) references Staff(StaffID) on DELETE CASCADE on UPDATE CASCADE
 ALTER TABLE Booking ADD CONSTRAINT cli_bk_fk foreign key(ClientID) references Client(ClientID) on DELETE CASCADE on UPDATE CASCADE
-ALTER TABLE Booking ADD CONSTRAINT room_bk_fk foreign key(RoomID) references Room(RoomID) on DELETE CASCADE on UPDATE CASCADE
+ALTER TABLE Booking ADD CONSTRAINT room_bk_fk foreign key(RoomID) references Room(RoomID) on UPDATE NO ACTION
 ALTER TABLE Users ADD CONSTRAINT usr_fk foreign key(Usrname) references Staff(StaffID) on DELETE CASCADE on UPDATE CASCADE
-ALTER TABLE Room ADD CONSTRAINT bk_r_fk FOREIGN KEY (BookingID) REFERENCES Booking(BookingID)
+ALTER TABLE Room ADD CONSTRAINT bk_r_fk FOREIGN KEY (BookingID) REFERENCES Booking(BookingID) on DELETE NO ACTION on UPDATE NO ACTION
+
 
 ALTER TABLE Staff ADD CONSTRAINT ck_gen CHECK (Gender=N'Nam' or Gender=N'Nu')
 ALTER TABLE USERS ADD CONSTRAINT ck_au CHECK (authority='1' or authority='0')
-ALTER TABLE Booking ADD CONSTRAINT chk_bk CHECK (CheckInDate <= CheckOutDate)
-ALTER TABLE Booking DROP CONSTRAINT chk_bk
+
 
 ----- SET DATEFORMAT DMY
-DROP TABLE Staff
 
 INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('NGUYEN NHU NHUT', 'Nu','80 Nguyen Thai Binh, Q1, TPHCM','0927345678',13-04-2001,'Room Attendent')
 INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('LE THI PHI YEN','Nu','333 Nguyen Hue, Q1, TPHCM','0987567390',21-04-2000,'Room Attendent')
@@ -78,13 +72,13 @@ INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VAL
 INSERT INTO Staff(FullName,Gender,cAddress,PhoneNumber,DateofBirth,Position) VALUES ('NGO THI BINH','Nu','03 Tan Lap, Di An, Binh Duong','091632783',10-08-1990,'Cleaner')
 
 INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P001', 'VIP', 'Available', 'ST6')
-INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P002', 'VIP', 'Booked', 'ST1')
+INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P002', 'VIP', 'Booked', 'ST6')
 INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P002', 'Standard', 'Available', 'ST6')
 INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P004', 'Standard', 'Booked', 'ST2')
-INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P005', 'Double', 'Booked', 'ST6')
-INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P006', 'Single', 'Available', 'ST6')
-INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P007', 'Twin', 'Available', 'ST2')
-INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P008', 'Triple', 'Booked', 'ST2')
+INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P005', 'Double', 'Booked', 'ST2')
+INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P006', 'Single', 'Available', 'ST2')
+INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P007', 'Twin', 'Available', 'ST6')
+INSERT INTO Room(RoomID, TypeofRoom, cStatus, StaffID) VALUES ('P008', 'Triple', 'Booked', 'ST6')
 
 INSERT INTO Client(FullName,PhoneNumber,DateofBirth,CCCD) VALUES ('NGUYEN VAN A','088234572',10/05/1990,'11')
 INSERT INTO Client(FullName,PhoneNumber,DateofBirth,CCCD) VALUES ('TRAN NGOC HAN','0908256478',15/07/1989,'222')
@@ -105,13 +99,24 @@ INSERT INTO Users(Usrname, cPassword,authority) VALUES ('ST5', '12345678','1')
 
 -------------------------------------------------------------------
 
-SELECT * FROM Client
+Select Booking.RoomID, ClientID,CheckInDate, CheckOutDate From Booking, Room where Booking.RoomID = Room.RoomID
+
+
+SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client
 
 SELECT * FROM Staff
 
 select * from Staff Where FullName='NGUYEN NHU NHUT'
 
 select * from users
+SELECT * FROM Client
+select * from Users
+SELECT * FROM Booking
+select * from room;
+update Room set cStatus='Available' where RoomID='P008'
+
+select * from Client
+select * from Booking
 SELECT * 
 FROM CLIENT, Booking
 WHERE Client.ClientID = Booking.ClientID
@@ -121,7 +126,7 @@ SELECT *
 FROM Staff
 WHERE StaffID = 'ST1'
 
-SELECT * FROM Room
+SELECT * FROM Booking
 
 select * from Staff Where FullName like '%YEN'
  
@@ -159,55 +164,4 @@ AS BEGIN
 	  WHERE Usrname = @StaffID
 END
 
-GO
-CREATE TRIGGER trg_ins_bk ON Booking
-FOR INSERT, UPDATE
-AS 
-BEGIN
-     DECLARE @RoomID varchar(5), @CheckInDate datetime, @CheckOutDate datetime
-	 SELECT @RoomID = RoomID, @CheckInDate = CheckInDate, @CheckOutDate = CheckOutDate
-	 FROM INSERTED
-
-	 UPDATE Room
-	 SET cStatus = 'Booked'
-	 WHERE RoomID = @RoomID 
-END
-
-----
-GO 
-CREATE TRIGGER trg_ins_bking ON Booking
-FOR INSERT, UPDATE
-AS BEGIN
-DECLARE @CheckInDate datetime, @CheckOutDate datetime
-SELECT @CheckInDate = CheckInDate, @CheckOutDate = CheckOutDate
-FROM inserted
-IF(@CheckOutDate > @CheckInDate)
-BEGIN
-PRINT 'Succeeded'
-END
-ELSE 
-BEGIN
-PRINT 'Check-in date must be less than check-out date'
-ROLLBACK TRANSACTION
-END
-END
-
-------------------------------
-
-DROP TRIGGER trg_ins_bking
-DROP TRIGGER trg_ins_bk
-ALTER TABLE Booking DROP CONSTRAINT df_bk
-ALTER TABLE Booking DROP CONSTRAINT df_co
-ALTER TABLE Booking DROP CONSTRAINT chk_bk
--------------------------------------------
-ALTER TABLE Booking DROP CONSTRAINT cli_bk_fk
-ALTER TABLE Booking DROP CONSTRAINT room_bk_fk
-ALTER TABLE Room DROP CONSTRAINT bk_r_fk
-DROP TABLE Booking
--- chay lai bang Booking o tren
-ALTER TABLE Booking ADD CONSTRAINT cli_bk_fk foreign key(ClientID) references Client(ClientID) on DELETE CASCADE on UPDATE CASCADE
-ALTER TABLE Booking ADD CONSTRAINT room_bk_fk foreign key(RoomID) references Room(RoomID) on DELETE CASCADE on UPDATE CASCADE
-ALTER TABLE Room ADD CONSTRAINT bk_r_fk FOREIGN KEY (BookingID) REFERENCES Booking(BookingID)
-ALTER TABLE Booking ADD CONSTRAINT chk_bk CHECK (CheckInDate <= CheckOutDate);
---- 
 

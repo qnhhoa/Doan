@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,7 +33,7 @@ public class Booking_Panel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         RoomID_TextField.setText(MainFrame.ID_TextField.getText());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,7 +194,10 @@ public class Booking_Panel extends javax.swing.JFrame {
            Phone_KH_TextField.setText(null);
            DOBirth_Chooser.setDate(null);
            JOptionPane.showMessageDialog(this, "Book successfull");
-           new MainFrame().GetDataFromDTBToRoomTable();
+           
+           GetDataFromCusTable();
+           GetDataFromDTBToRoomTable();
+           
            this.setVisible(false);
        };
        
@@ -289,6 +293,85 @@ public class Booking_Panel extends javax.swing.JFrame {
             }
         });
     }
+    public void GetDataFromDTBToRoomTable(){
+        
+        
+        DefaultTableModel model= (DefaultTableModel)MainFrame.Phong_Table.getModel();
+        model.setRowCount(0);
+        list_room = room_bus.SelectData("select * from Room");
+        Object[] row= new Object[7];
+        
+        for(Room_DTO room : list_room){
+            row= new Object[7];
+//            System.out.println("1 "+room.getStatus().equals("Booked"));
+//            System.out.println("0 "+room.getStatus().equals("Check In"));
+//            System.out.println("-----------------");
+//            System.out.println("1 "+room.getStatus());
+//            System.out.println("0 "+room.getStatus());
+//                        System.out.println("-----------------");
+
+            
+            row[0]=room.getRoomId();
+            row[1]=room.getTypeOfRoom();
+            row[2]=room.getStatus();
+            if (room.getStatus().equals("Booked") || room.getStatus().equals("Check In")){
+                
+                String sql = String.format("select * from Room, Booking Where Booking.BookingId = Room.BookingId AND Room.RoomID='%s'", room.getRoomId());
+                list_obj = new ArrayList<>();
+                list_obj = room_bus.SelectDataJoinBooking(sql);
+                           //     System.out.println(sql);
+
+               // System.out.println(list_obj.size());
+                if (list_obj.size()>0){
+                row[3]=list_obj.get(0)[4].toString();
+                row[4]=list_obj.get(0)[5].toString();
+                
+                /// check in date and out date is null
+                if (list_obj.get(0)[6]==null && list_obj.get(0)[7]==null){
+                    row[5]=null;
+                    row[6]=null;
+                    
+                } else if(list_obj.get(0)[7]==null){
+                    row[5]=list_obj.get(0)[6].toString();
+                    row[6]=null;
+                    
+                } else if (list_obj.get(0)[6]==null){
+                    row[5]=null;
+                    row[6]=list_obj.get(0)[7].toString();
+                }else{
+                    row[5]=list_obj.get(0)[6].toString();
+                    row[6]=list_obj.get(0)[7].toString();
+                }
+                
+                }
+                
+            }
+            
+          
+            model.addRow(row); 
+        }
+        
+
+    }
+    public void GetDataFromCusTable() {       
+        DefaultTableModel model1;
+        model1 = (DefaultTableModel)MainFrame.KH_Table.getModel();
+        model1.setRowCount(0);
+        list_cus = cus_bus.Select("SELECT ClientID, FullName, CCCD, PhoneNumber, DateofBirth FROM Client");
+        Object[] row= new Object[5];
+        list_cus.forEach((Customer_DTO cus) -> {
+            row[0] = cus.getCustomer_id();
+            row[1] = cus.getFullname();
+            row[2] = cus.getCccd();
+            row[3] = cus.getPhoneNumber();
+            row[4] = cus.getDateOfBird();
+            model1.addRow(row);
+        });
+        ;
+    }
+    List<Room_DTO> list_room = new ArrayList<>();
+    List<Customer_DTO> list_cus = new ArrayList<>();
+    List<Object[]> list_obj;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CCCD_KH_TextField;

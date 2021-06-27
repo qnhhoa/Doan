@@ -1324,10 +1324,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnCheckIn_PMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCheckIn_PMouseClicked
         // TODO add your handling code here:      
-       Date date = Calendar.getInstance().getTime();         
+        
+        Date date = Calendar.getInstance().getTime();         
        bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),date,null));
+       room_bus.Update(new Room_DTO(ID_TextField.getText(),TypeRoomComboBox.getSelectedItem().toString(),"Check In",null,BookID_TextField.getText()));
        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
        GetDataFromDTBToRoomTable();
+       
        
     }//GEN-LAST:event_btnCheckIn_PMouseClicked
 
@@ -1368,7 +1371,8 @@ public class MainFrame extends javax.swing.JFrame {
        
        bk_bus.Update(new Booking_DTO(varContainBookingID,CustomerID_TextField.getText(),ID_TextField.getText(),null,date));
        //cus_bus.Update(new Customer_DTO(CustomerID_TextField.getText(),null,null,null,date));
-       room_bus.Update(new Room_DTO(ID_Text.getText(),TypeRoomComboBox.getSelectedItem().toString(),"Available",null,null));
+       room_bus.Update(new Room_DTO(ID_TextField.getText(),TypeRoomComboBox.getSelectedItem().toString(),"Available",null,null));
+       
        DefaultTableModel model = (DefaultTableModel) Phong_Table.getModel();
        model.setRowCount(0);
        GetDataFromDTBToRoomTable();
@@ -1869,8 +1873,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-
-    
   public void GetDataFromDTBToRoomTable(){
         
         
@@ -2024,7 +2026,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel INfo_lable;
     private javax.swing.JPanel Info_Panel;
     private javax.swing.JPanel KH_Panel;
-    private javax.swing.JTable KH_Table;
+    public static javax.swing.JTable KH_Table;
     private javax.swing.JPanel LSDP_Panel;
     private javax.swing.JTextField LSDP_Search;
     private javax.swing.JTable LSDP_Table;
@@ -2038,7 +2040,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel Name_Text;
     private javax.swing.JTextField Phone_KH_TextField;
     private javax.swing.JTextField Phone_NV_TextField;
-    private javax.swing.JTable Phong_Table;
+    public static javax.swing.JTable Phong_Table;
     private javax.swing.JPanel QLP_Panel;
     private javax.swing.JTextField Room_Search;
     private javax.swing.JLabel SDT_Backgr;
