@@ -30,10 +30,10 @@ public class Booking_DAL {
              if (booking.getCheckInDate()==null && booking.getCheckOutDate()==null){
                   Object [] arg= {booking.getRoomId(),booking.getCustomerId(),"",""};
                  
-                  SQL = String.format("INSERT INTO Booking(RoomId,ClientID) VALUES ('%s','%s')",arg);
+                  SQL = String.format("INSERT INTO Booking(RoomID,ClientID) VALUES ('%s','%s')",arg);
              }else{
                  Object [] arg= {booking.getRoomId(),booking.getCustomerId(),formatter.format(booking.getCheckInDate()),""};
-                 SQL = String.format("INSERT INTO Booking(RoomId,ClientID) VALUES ('%s','%s')",arg);
+                 SQL = String.format("INSERT INTO Booking(RoomID,ClientID) VALUES ('%s','%s')",arg);
              }
 
 
@@ -57,7 +57,7 @@ public class Booking_DAL {
         try {
             Object arg[]= {booking.getBookId()};
             String sql;
-            sql = String.format("DELETE FROM booking WHERE bookId  = '%s'", arg);
+            sql = String.format("DELETE FROM Booking WHERE BookID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0 ){

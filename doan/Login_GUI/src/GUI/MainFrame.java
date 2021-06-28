@@ -1205,10 +1205,10 @@ public class MainFrame extends javax.swing.JFrame {
                 if (list_obj.size()>0){
                     
                     try {
-                        Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
-                        Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
-                        Booking_DTO booking_dto = new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),null
-                                        ,checkInDate,checkOutDate);
+//                        Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
+//                        Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+//                        Booking_DTO booking_dto = new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),null
+//                                        ,checkInDate,checkOutDate);
                             row[3]=list_obj.get(0)[4].toString();
                             row[4]=list_obj.get(0)[5].toString();
 
@@ -1230,7 +1230,7 @@ public class MainFrame extends javax.swing.JFrame {
                             }
                         
                     
-                    } catch (ParseException ex) {
+                    } catch (Exception ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -1249,8 +1249,24 @@ public class MainFrame extends javax.swing.JFrame {
                 if (list_obj.size()>0){
 
                     try {
-                       Date checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
-                        Date checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+                        Date checkInDate=null;
+                        Date checkOutDate=null;
+                        if (list_obj.get(0)[6]==null && list_obj.get(0)[7]==null){
+                               checkInDate = null;
+                               checkOutDate = null;
+
+                            } else if(list_obj.get(0)[7]==null){
+                                checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
+                                checkOutDate = null;
+
+                            } else if (list_obj.get(0)[6]==null){
+                                checkInDate = null;
+                               checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+                            }else{
+                               checkInDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[6].toString());
+                               checkOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(list_obj.get(0)[7].toString());
+                        }
+                      
                         Booking_DTO booking_dto = new Booking_DTO(list_obj.get(0)[4].toString(),list_obj.get(0)[5].toString(),null
                                         ,checkInDate,checkOutDate);
                         

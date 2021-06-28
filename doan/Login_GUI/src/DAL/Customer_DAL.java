@@ -31,7 +31,7 @@ public class Customer_DAL {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),df.format(cus.getDateOfBird())};      
             String cus_SQL;
-            cus_SQL = String.format("INSERT INTO Client(fullname,CCCD,PhoneNumber,DateofBirth) VALUES ('%s','%s','%s','%s')",arg);
+            cus_SQL = String.format("INSERT INTO Client(Fullname,CCCD,PhoneNumber,DateofBirth) VALUES ('%s','%s','%s','%s')",arg);
 
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
 
@@ -71,7 +71,7 @@ public class Customer_DAL {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Object arg[]= {cus.getFullname(),cus.getCccd(),cus.getPhoneNumber(),df.format(cus.getDateOfBird()),cus.getCustomer_id()};
             String sql;
-            sql = String.format("UPDATE Client SET FullName='%s', cccd='%s', phoneNumber='%s', DateofBirth='%s' WHERE ClientID  = '%s'", arg);
+            sql = String.format("UPDATE Client SET FullName='%s', CCCD='%s', PhoneNumber='%s', DateofBirth='%s' WHERE ClientID  = '%s'", arg);
             Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
             int rows = statement.executeUpdate(sql);
             if (rows > 0){
