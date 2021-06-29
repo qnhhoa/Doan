@@ -17,10 +17,15 @@ public class Account_DTO {
     
     public Account_DTO (){
     }
-    
     public Account_DTO (String ID, String Pass) {
         this.ID = ID;
         this.Pass = Pass;
+    }
+    
+    public Account_DTO (String ID, String Pass, char flag) {
+        this.ID = ID;
+        this.Pass = Pass;
+        this.flag = flag;
     }
     
     public void setID(String ID) {

@@ -1125,6 +1125,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnLSDPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLSDPMouseClicked
         TabPanel.setSelectedComponent(LSDP_Panel);
+        GetDataFromLSPTable();
     }//GEN-LAST:event_btnLSDPMouseClicked
 
     private void btnLSDPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLSDPMouseEntered
@@ -1509,8 +1510,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnAdd_NVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd_NVMouseClicked
         // TODO add your handling code here:
+        
         if(em_BUS.Insert(new Employee_DTO("",Name_NV_TextField.getText(),Gender_NV_TextField.getText(),Adr_NV_TextField.getText(),Phone_NV_TextField.getText(),
                        DOBirth_Chooser_NV.getDate(),DePart_NV_TextField.getSelectedItem().toString()))){
+            
+            List<Employee_DTO> list_emp = new ArrayList<>();
+            
+            list_emp=em_BUS.SelectData("select * from Staff where PhoneNumber = '"+Phone_NV_TextField.getText()+"'");
+            if (DePart_NV_TextField.getSelectedItem().toString().equals("Manager")){
+                account_BUS.Insert(new Account_DTO(list_emp.get(0).getStaffId(),"12345678",'1'));    
+            }
+            if (DePart_NV_TextField.getSelectedItem().toString().equals("Receptionist")){
+                account_BUS.Insert(new Account_DTO(list_emp.get(0).getStaffId(),"12345678",'0'));    
+            }
+                       
             JOptionPane.showMessageDialog(null,"Insert Employee Successfull!","Announcement",JOptionPane.INFORMATION_MESSAGE);
             GetDataFromDTBToStaffTable();
         };

@@ -22,6 +22,9 @@ public class Account_BUS {
     public boolean ChangePass(Account_DTO acc_DTO){
         return account_DAL.ChangePass(acc_DTO);
     }
+    public boolean Insert(Account_DTO acc){
+        return account_DAL.Insert(acc);
+    }
     
     public List getINFO (Account_DTO account_DTO){
        return account_DAL.getINFO(account_DTO);

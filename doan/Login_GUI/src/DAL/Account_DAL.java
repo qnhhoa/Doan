@@ -37,7 +37,29 @@ public class Account_DAL {
         }
         return false;
     }
-    
+    public boolean Insert(Account_DTO ac){
+        try {
+            
+            Object[] arg= {ac.getID(),ac.getPass(),ac.getflag()};
+            
+            String em_SQL;
+            em_SQL = String.format("INSERT INTO Users(Usrname,cPassword,authority) VALUES ('%s','%s','%s')",arg);
+
+            Statement statement = DAL.ConnectionDB_DAL.conn.createStatement();
+
+            int rows_employee = statement.executeUpdate(em_SQL);
+            if (rows_employee > 0){
+                System.out.println("Insert successfull");
+            }else {
+                System.out.println("Insert fail");
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,ex.toString(),"Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
     public List getINFO(Account_DTO account_DTO) {
         List<Object[]> list_obj = new ArrayList<>();
         try{
